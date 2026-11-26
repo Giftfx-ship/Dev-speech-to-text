@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Gift Text to Speech</title>
+    <style>
+        /* --- PROFESSIONAL UI CSS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0a0a0f 0%, #1a103c 50%, #0a0a0f 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #8b5cf6;
+            --primary-glow: rgba(139, 92, 246, 0.4);
+            --success: #10b981;
+            --whatsapp: #25D366;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* --- PRELOADER ANIMATION --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0a0a0f;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(139, 92, 246, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .preloader-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            letter-spacing: 2px;
+            animation: pulseText 1.5s infinite alternate;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseText { from { opacity: 0.5; } to { opacity: 1; } }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            width: 100%;
+            flex: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Class added by JS to show content smoothly */
+        .loaded .container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(to right, #c4b5fd, #f472b6, #c4b5fd);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 13px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle glow inside the card */
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        textarea, select {
+            width: 100%;
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--text-main);
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus, select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Custom Dropdown Arrow */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px top 50%;
+            background-size: 12px auto;
+        }
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 14px 18px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #3f3f46;
+            transition: .4s;
+            border-radius: 26px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(24px); }
+
+        /* Main Button */
+        .btn-generate {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 20px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-generate::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-generate:hover::after { left: 100%; }
+        .btn-generate:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6); }
+        .btn-generate:active { transform: translateY(1px); }
+        
+        .btn-generate:disabled {
+            background: #3f3f46;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-generate:disabled::after { display: none; }
+
+        /* Skeleton Loader */
+        .skeleton-loader {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 14px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .skeleton-line {
+            height: 12px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .skeleton-audio {
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            margin-top: 15px;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Result Area */
+        .audio-result {
+            margin-top: 20px;
+            display: none;
+            padding: 20px;
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 16px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .audio-result h3 {
+            font-size: 14px;
+            color: var(--success);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background-color: var(--success);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 1.5s infinite;
+        }
+
+        audio {
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        /* Download Button */
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid var(--glass-border);
+            width: 100%;
+        }
+        
+        .btn-download:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* History Section */
+        .history-section {
+            margin-top: 30px;
+        }
+
+        .history-section h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .history-item {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .history-item:hover {
+            transform: translateY(-3px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
+        }
+
+        .history-text {
+            font-size: 14px;
+            color: var(--text-main);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .history-meta {
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .voice-tag {
+            background: rgba(139, 92, 246, 0.15);
+            color: #c4b5fd;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 50px;
+            right: 20px;
+            background-color: var(--whatsapp);
+            color: #FFF;
+            border-radius: 50px;
+            box-shadow: 2px 2px 20px rgba(37, 211, 102, 0.4);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 2px 2px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+            color: var(--text-muted);
+            font-size: 12px;
+            z-index: 99;
+            border-top: 1px solid var(--glass-border);
+            letter-spacing: 0.5px;
+        }
+
+        footer span {
+            color: #c4b5fd;
+            font-weight: 700;
+        }
+
+        /* Keyframe Animations */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="spinner"></div>
+        <div class="preloader-text">LOADING STUDIO</div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Dev Gift Text to Speech</h1>
+            <p>Premium AI Voice Generator</p>
+        </div>
+
+        <!-- Main App Card -->
+        <div class="glass-card">
+            <div class="card-content">
+                <div class="form-group">
+                    <label for="text-input">Your Text</label>
+                    <textarea id="text-input" placeholder="Type or paste your text here..."></textarea>
+                </div>
+
+                <!-- Auto-Play Toggle -->
+                <div class="toggle-container">
+                    <span style="font-size: 13px; font-weight: 600;">⚡ Instant Play (as you type)</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autoplay-toggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label for="voice-select">Voice</label>
+                        <select id="voice-select">
+                            <option value="woman1">Woman 1</option>
+                            <option value="woman2">Woman 2</option>
+                            <option value="woman3">Woman 3</option>
+                            <option value="man1">Man 1</option>
+                            <option value="man2">Man 2</option>
+                            <option value="man3">Man 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" style="flex: 1; margin-bottom: 0;">
+                        <label for="lang-select">Language</label>
+                        <select id="lang-select">
+                            <option value="English">English</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="btn-generate" onclick="generateAudio()">
+                    ⚡ Generate Voice
+                </button>
+
+                <!-- Skeleton Loader -->
+                <div id="skeleton-loader" class="skeleton-loader">
+                    <div class="skeleton-line" style="width: 40%;"></div>
+                    <div class="skeleton-line" style="width: 80%;"></div>
+                    <div class="skeleton-audio"></div>
+                </div>
+
+                <!-- Result Player -->
+                <div id="result-area" class="audio-result">
+                    <h3><div class="pulse-dot"></div> Voice Generated</h3>
+                    <audio id="audio-player" controls></audio>
+                    <a id="download-link" class="btn-download" href="#" download target="_blank">⬇ Download MP3</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <h2>📁 Saved History</h2>
+            <div id="history-list">
+                <p style="color: var(--text-muted); font-size: 13px; text-align: center; margin-top: 20px;">No history yet. Generate your first voice note!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/2349164624021" class="whatsapp-float" target="_blank" title="Chat with Dev Gift">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        Made with ❤️ by <span>Dev Gift</span> | Call/WhatsApp: <span>09164624021</span>
+    </footer>
+
+    <!-- --- JAVASCRIPT --- -->
+    <script>
+        const API_BASE_URL = "https://api.omegatech.app/api/ai/text2speech-v3";
+        
+        const textInput = document.getElementById('text-input');
+        const voiceSelect = document.getElementById('voice-select');
+        const langSelect = document.getElementById('lang-select');
+        const generateBtn = document.getElementById('generate-btn');
+        const resultArea = document.getElementById('result-area');
+        const audioPlayer = document.getElementById('audio-player');
+        const downloadLink = document.getElementById('download-link');
+        const historyList = document.getElementById('history-list');
+        const autoplayToggle = document.getElementById('autoplay-toggle');
+        const skeletonLoader = document.getElementById('skeleton-loader');
+        const preloader = document.getElementById('preloader');
+
+        let typingTimer;
+        let isGenerating = false;
+
+        // --- PRELOADER LOGIC ---
+        window.addEventListener('load', () => {
+            // Hide preloader after 1.2 seconds to show off the animation
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.visibility = 'hidden';
+                document.body.classList.add('loaded');
+            }, 1200); // Adjust this time if you want it faster/slower
+        });
+
+        // Load History on startup
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHistory();
+        });
+
+        // Auto-play typing listener
+        textInput.addEventListener('input', () => {
+            if (!autoplayToggle.checked) return; 
+            
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(() => {
+                if (textInput.value.trim().length > 2) {
+                    generateAudio(true); 
+                }
+            }, 800);
+        });
+
+        async function generateAudio(isAuto = false) {
+            const text = textInput.value.trim();
+            const voice = voiceSelect.value;
+            const language = langSelect.value;
+
+            if (!text || isGenerating) return;
+
+            isGenerating = true;
+
+            if (!isAuto) {
+                generateBtn.disabled = true;
+                generateBtn.innerHTML = "Generating Audio...";
+                resultArea.style.display = 'none';
+                skeletonLoader.style.display = 'block'; // Show skeleton
+            }
+
+            try {
+                const url = `${API_BASE_URL}?text=${encodeURIComponent(text)}&voice=${voice}&language=${language}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success === true && data.audio) {
+                    skeletonLoader.style.display = 'none'; // Hide skeleton
+                    resultArea.style.display = 'block';
+                    
+                    if (audioPlayer.src !== data.audio) {
+                        audioPlayer.src = data.audio;
+                        audioPlayer.load(); 
+                        
+                        // Instant Play
+                        const playPromise = audioPlayer.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(() => {
+                                console.log("Browser blocked auto-play.");
+                            });
+                        }
+                    }
+
+                    downloadLink.href = data.audio;
+                    downloadLink.setAttribute('download', `dev-gift-voice-${Date.now()}.mp3`);
+
+                    saveToHistory(text, voice, data.audio);
+                    renderHistory();
+                    
+                    if (!isAuto) resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    throw new Error("API failed to return audio");
+                }
+            } catch (error) {
+                console.error("Error:", error);
+                skeletonLoader.style.display = 'none';
+                if (!isAuto) alert("Network error or API limit reached. Try again.");
+            } finally {
+                isGenerating = false;
+                if (!isAuto) {
+                    generateBtn.disabled = false;
+                    generateBtn.innerHTML = "⚡ Generate Voice";
+                }
+            }
+        }
+
+        function saveToHistory(text, voice, audioUrl) {
+            let history = JSON.parse(localStorage.getItem('devgift_tts_history')) || [];
+            
+            const newRecord = {
+                id: Date.now(),
+                text: text.length > 80 ? text.substring(0, 80) + "..." : text,
+                fullText: text,
+                voice: voice,
+                audio: audioUrl,
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+
+            history.unshift(newRecord);
+            if (history.length > 20) history = history.slice(0, 20); 
+            localStorage.setItem('devgift_tts_history', JSON.stringify(history));
+        }
+
+        function renderHistory() {
+            const history = JSON.parse(localStorage.getItem('devgift_tts_history')) || [];
+            
+            if (history.length === 0) {
+                historyList.innerHTML = '<p style="color: var(--text-muted); font-size: 13px; text-align: center; margin-top: 20px;">No history yet. Generate your first voice note!</p>';
+                return;
+            }
+
+            historyList.innerHTML = history.map((item, index) => `
+                <div class="history-item" style="animation-delay: ${index * 0.1}s">
+                    <div class="history-text">"${item.text}"</div>
+                    <div class="history-meta">
+                        <span class="voice-tag">🎙️ ${item.voice}</span>
+                        <span>${item.date}</span>
+                    </div>
+                    <audio controls src="${item.audio}" style="width:100%; height: 40px; border-radius: 8px;"></audio>
+                    <a href="${item.audio}" download="dev-gift-${item.voice}-${item.id}.mp3" class="btn-download">⬇ Save MP3</a>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
