@@ -3,225 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dev Gift Voice</title>
+    <title>Dev Gift Voice Studio</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-        /* Light Mode (Default) */
+        /* --- PREMIUM LIGHT MODE --- */
         :root {
-            --bg-body: #f9fafb;
-            --bg-card: #ffffff;
-            --bg-input: #f3f4f6;
-            --text-main: #111827;
-            --text-muted: #6b7280;
-            --border: #e5e7eb;
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
+            --bg-base: #f0f4f8;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --input-bg: rgba(255, 255, 255, 0.8);
+            --input-border: rgba(0, 0, 0, 0.05);
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --primary-glow: rgba(99, 102, 241, 0.4);
             --success: #10b981;
-            --error-bg: #fee2e2;
+            --error-bg: rgba(239, 68, 68, 0.1);
             --error-text: #ef4444;
+            --mesh-1: rgba(99, 102, 241, 0.15);
+            --mesh-2: rgba(236, 72, 153, 0.1);
+            --mesh-3: rgba(16, 185, 129, 0.1);
         }
 
-        /* Dark Mode */
+        /* --- PREMIUM DARK MODE --- */
         [data-theme="dark"] {
-            --bg-body: #111827;
-            --bg-card: #1f2937;
-            --bg-input: #374151;
-            --text-main: #f9fafb;
-            --text-muted: #9ca3af;
-            --border: #374151;
-            --primary: #6366f1;
-            --primary-hover: #818cf8;
-            --error-bg: rgba(239, 68, 68, 0.2);
+            --bg-base: #0b1120;
+            --glass-bg: rgba(30, 41, 59, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --input-border: rgba(255, 255, 255, 0.1);
+            --primary: #818cf8;
+            --primary-hover: #6366f1;
+            --primary-glow: rgba(129, 140, 248, 0.3);
+            --success: #34d399;
+            --error-bg: rgba(248, 113, 113, 0.1);
             --error-text: #f87171;
+            --mesh-1: rgba(99, 102, 241, 0.2);
+            --mesh-2: rgba(236, 72, 153, 0.15);
+            --mesh-3: rgba(16, 185, 129, 0.15);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: var(--bg-body);
+            background-color: var(--bg-base);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             padding: 20px;
             padding-bottom: 80px;
-            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
 
+        /* Animated Mesh Background */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 10s infinite alternate;
+        }
+
+        .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: var(--mesh-1); }
+        .blob-2 { bottom: -10%; right: -10%; width: 60vw; height: 60vw; background: var(--mesh-2); animation-delay: -5s; }
+        .blob-3 { top: 40%; left: 40%; width: 40vw; height: 40vw; background: var(--mesh-3); animation-delay: -2s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, 50px) scale(1.1); }
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-base);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s;
+        }
+
+        .loader-ring {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--glass-border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
         .container {
-            max-width: 500px;
+            max-width: 550px;
             margin: 0 auto;
             width: 100%;
             flex: 1;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        /* Header */
+        body.loaded .container {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HEADER --- */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
+            margin-top: 10px;
         }
 
-        .header h1 {
-            font-size: 20px;
-            font-weight: 700;
+        .brand h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, var(--text-main) 0%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .header p {
+        .brand p {
             font-size: 13px;
             color: var(--text-muted);
-            margin-top: 2px;
+            font-weight: 500;
+            margin-top: 4px;
         }
 
-        .theme-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+        .theme-toggle {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--glass-shadow);
             color: var(--text-main);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* Card */
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        .theme-toggle:hover {
+            transform: scale(1.08) rotate(15deg);
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
-        /* Form Elements */
-        .form-group {
-            margin-bottom: 16px;
+        /* --- GLASS CARD --- */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+            overflow: hidden;
         }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+
+        /* Form Groups */
+        .form-group { margin-bottom: 20px; }
 
         label {
             display: block;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 700;
             color: var(--text-main);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
         }
 
         textarea, select {
             width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-input);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--input-border);
+            background: var(--input-bg);
             color: var(--text-main);
             font-size: 15px;
+            font-weight: 500;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
 
         textarea:focus, select:focus {
             border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+            background: var(--glass-bg);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 100px;
+        textarea { resize: vertical; min-height: 120px; }
+        
+        /* Custom Select Arrow */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2364748b%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px top 50%;
+            background-size: 12px auto;
         }
 
-        /* Toggle */
+        /* Switch */
         .toggle-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
-            background: var(--bg-input);
-            border-radius: 8px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border);
+            padding: 14px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 14px;
+            margin-bottom: 20px;
         }
 
-        .toggle-row span {
-            font-size: 14px;
-            font-weight: 500;
-        }
+        .toggle-row span { font-size: 14px; font-weight: 600; }
 
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
+        .switch { position: relative; display: inline-block; width: 48px; height: 26px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        
         .slider {
             position: absolute;
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #d1d5db;
-            transition: .3s;
-            border-radius: 24px;
+            background-color: var(--text-muted);
+            transition: .4s;
+            border-radius: 30px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
+            height: 20px; width: 20px;
+            left: 3px; bottom: 3px;
             background-color: white;
-            transition: .3s;
+            transition: .4s;
             border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        input:checked + .slider {
-            background-color: var(--success);
-        }
+        input:checked + .slider { background-color: var(--success); }
+        input:checked + .slider:before { transform: translateX(22px); }
 
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
+        /* Grid */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 24px; }
 
-        /* Grid for dropdowns */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        /* Button */
+        /* Primary Button */
         .btn-primary {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             background: var(--primary);
-            color: white;
+            color: #ffffff;
             border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--primary-glow);
         }
 
         .btn-primary:hover {
             background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px var(--primary-glow);
         }
 
-        .btn-primary:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
+        .btn-primary:active { transform: translateY(1px); }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* Loading state for button */
+        .btn-primary.loading {
+            color: transparent;
+        }
+        .btn-primary.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            top: 50%; left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
 
         /* Error Box */
@@ -229,132 +332,166 @@
             display: none;
             background: var(--error-bg);
             color: var(--error-text);
-            padding: 12px;
-            border-radius: 8px;
+            padding: 14px;
+            border-radius: 12px;
             font-size: 13px;
-            font-weight: 500;
-            margin-top: 16px;
+            font-weight: 600;
+            margin-top: 20px;
             text-align: center;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         /* Result Area */
         .result-box {
             display: none;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border);
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--glass-border);
+            animation: slideUp 0.4s ease;
         }
 
-        audio {
-            width: 100%;
-            margin-bottom: 12px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+
+        audio { width: 100%; margin-bottom: 15px; outline: none; border-radius: 8px; }
 
         .btn-download {
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
             width: 100%;
-            text-align: center;
-            padding: 12px;
-            background: var(--bg-input);
+            padding: 14px;
+            background: var(--input-bg);
             color: var(--text-main);
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 14px;
-            font-weight: 600;
-            border: 1px solid var(--border);
-        }
-
-        .btn-download:hover {
-            background: var(--border);
-        }
-
-        /* History */
-        .history-title {
-            font-size: 16px;
             font-weight: 700;
-            margin: 24px 0 12px 0;
+            border: 1px solid var(--input-border);
+            transition: all 0.2s;
         }
+
+        .btn-download:hover { background: var(--glass-bg); border-color: var(--text-muted); }
+
+        /* --- HISTORY --- */
+        .history-section { margin-top: 35px; }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .history-header h2 { font-size: 18px; font-weight: 800; }
 
         .history-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 12px;
-            margin-bottom: 12px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 18px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: var(--glass-shadow);
+            animation: slideIn 0.4s ease-out forwards;
+            opacity: 0;
         }
 
-        .history-text {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: var(--text-main);
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
+        .history-text { font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
         .history-meta {
             display: flex;
             justify-content: space-between;
             font-size: 12px;
             color: var(--text-muted);
+            font-weight: 600;
             margin-bottom: 12px;
         }
 
-        /* WhatsApp & Footer */
-        .whatsapp-btn {
+        /* --- FLOATING WHATSAPP --- */
+        .whatsapp-float {
             position: fixed;
-            bottom: 60px;
+            bottom: 70px;
             right: 20px;
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             background: #25D366;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 10px rgba(37,211,102,0.3);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
             z-index: 100;
             text-decoration: none;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        .whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
+
+        /* --- FOOTER --- */
         footer {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: var(--bg-card);
-            border-top: 1px solid var(--border);
+            bottom: 0; left: 0; width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
             text-align: center;
-            padding: 14px;
-            font-size: 12px;
+            padding: 16px;
+            font-size: 13px;
+            font-weight: 600;
             color: var(--text-muted);
             z-index: 99;
         }
 
-        footer span {
-            color: var(--text-main);
-            font-weight: 600;
-        }
+        footer span { color: var(--text-main); font-weight: 800; }
     </style>
 </head>
 <body>
 
+    <div id="preloader">
+        <div class="loader-ring"></div>
+    </div>
+
+    <div class="bg-mesh">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <div>
+            <div class="brand">
                 <h1>Dev Gift Voice</h1>
-                <p>Premium AI Text to Speech</p>
+                <p>Premium AI Generator</p>
             </div>
-            <button class="theme-btn" id="theme-toggle">🌙 Dark</button>
+            <button class="theme-toggle" id="theme-toggle" title="Toggle Theme">
+                <svg id="icon-sun" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </button>
         </div>
 
-        <!-- Main Card -->
-        <div class="card">
+        <div class="glass-card">
             <div class="form-group">
                 <label>Input Text</label>
                 <textarea id="text-input" placeholder="Enter text to speak..."></textarea>
             </div>
 
             <div class="toggle-row">
-                <span>Instant Play (as you type)</span>
+                <span>⚡ Instant Play</span>
                 <label class="switch">
                     <input type="checkbox" id="autoplay-toggle" checked>
                     <span class="slider"></span>
@@ -385,36 +522,39 @@
 
             <div id="error-box" class="error-box"></div>
 
-            <!-- Result -->
             <div id="result-box" class="result-box">
                 <audio id="audio-player" controls></audio>
-                <a id="download-link" class="btn-download" href="#" download>Download MP3</a>
+                <a id="download-link" class="btn-download" href="#" download>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download MP3
+                </a>
             </div>
         </div>
 
-        <!-- History -->
-        <div class="history-title">Saved History</div>
-        <div id="history-list">
-            <p style="color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 20px;">No recent generations.</p>
+        <div class="history-section">
+            <div class="history-header">
+                <h2>Recent History</h2>
+            </div>
+            <div id="history-list">
+                <p style="color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 20px;">No generations yet.</p>
+            </div>
         </div>
     </div>
 
-    <!-- Floating WhatsApp -->
-    <a href="https://wa.me/2349164624021" class="whatsapp-btn" target="_blank">
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="white">
+    <a href="https://wa.me/2349164624021" class="whatsapp-float" target="_blank" title="Chat with Dev Gift">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="white">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
         </svg>
     </a>
 
-    <!-- Footer -->
     <footer>
-        © 2024 Made by <span>Dev Gift</span> | Call/WhatsApp: <span>09164624021</span>
+        Made by <span>Dev Gift</span> | WhatsApp: <span>09164624021</span>
     </footer>
 
     <script>
-        // The correct base URL from your screenshot
+        // Official Base URL from Documentation
         const API_BASE_URL = "https://api.omegatech.app/api/ai/text2speech-v3";
-        // Proxy to bypass CORS restrictions when hosted on Vercel
+        // Fallback Proxy for Vercel/CORS issues
         const CORS_PROXY = "https://api.allorigins.win/raw?url=";
 
         const textInput = document.getElementById('text-input');
@@ -427,33 +567,49 @@
         const historyList = document.getElementById('history-list');
         const autoplayToggle = document.getElementById('autoplay-toggle');
         const errorBox = document.getElementById('error-box');
+        const preloader = document.getElementById('preloader');
         
         const themeToggle = document.getElementById('theme-toggle');
+        const iconSun = document.getElementById('icon-sun');
+        const iconMoon = document.getElementById('icon-moon');
         
         let typingTimer;
         let isGenerating = false;
 
-        // --- Theme Logic ---
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        updateThemeBtn(savedTheme);
+        // --- Init App ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                    document.body.classList.add('loaded');
+                }, 500);
+            }, 800); // Artificial delay to show off the dope preloader
 
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateThemeBtn(newTheme);
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            setTheme(savedTheme);
+            renderHistory();
         });
 
-        function updateThemeBtn(theme) {
-            themeToggle.textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+        // --- Theme Logic ---
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            setTheme(currentTheme === 'light' ? 'dark' : 'light');
+        });
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            if (theme === 'dark') {
+                iconSun.style.display = 'block';
+                iconMoon.style.display = 'none';
+            } else {
+                iconSun.style.display = 'none';
+                iconMoon.style.display = 'block';
+            }
         }
 
-        // Load History
-        renderHistory();
-
-        // Auto-play typing listener
+        // --- Instant Play Listener ---
         textInput.addEventListener('input', () => {
             if (!autoplayToggle.checked) return; 
             clearTimeout(typingTimer);
@@ -464,7 +620,7 @@
             }, 800);
         });
 
-        // --- Generate Logic ---
+        // --- Generate Audio Logic ---
         async function generateAudio(isAuto = false) {
             const text = textInput.value.trim();
             const voice = voiceSelect.value;
@@ -477,24 +633,31 @@
 
             if (!isAuto) {
                 generateBtn.disabled = true;
-                generateBtn.textContent = "Generating...";
+                generateBtn.classList.add('loading');
                 resultBox.style.display = 'none';
             }
 
             try {
-                // Build the API URL
-                const apiUrl = `${API_BASE_URL}?text=${encodeURIComponent(text)}&voice=${voice}&language=${language}`;
+                // Build direct URL
+                const directUrl = `${API_BASE_URL}?text=${encodeURIComponent(text)}&voice=${voice}&language=${language}`;
                 
-                // Wrap it in the proxy to fix the Vercel CORS issue
-                const fetchUrl = CORS_PROXY + encodeURIComponent(apiUrl);
+                let response;
+                try {
+                    // Try Direct Fetch first (Best case scenario)
+                    response = await fetch(directUrl);
+                    if (!response.ok) throw new Error("Direct fetch failed");
+                } catch (e) {
+                    console.log("Direct fetch failed, trying proxy...");
+                    // If it fails (CORS), fallback to Proxy
+                    const proxyUrl = CORS_PROXY + encodeURIComponent(directUrl);
+                    response = await fetch(proxyUrl);
+                }
 
-                const response = await fetch(fetchUrl);
                 const data = await response.json();
 
                 if (data && data.success === true && data.audio) {
                     resultBox.style.display = 'block';
                     
-                    // Play Audio Instantly
                     if (audioPlayer.src !== data.audio) {
                         audioPlayer.src = data.audio;
                         audioPlayer.load(); 
@@ -502,71 +665,67 @@
                         const playPromise = audioPlayer.play();
                         if (playPromise !== undefined) {
                             playPromise.catch(() => {
-                                // Browser blocked autoplay
+                                console.log("Browser blocked autoplay");
                             });
                         }
                     }
 
-                    // Setup Download Link
                     downloadLink.href = data.audio;
                     downloadLink.setAttribute('download', `dev-gift-${voice}-${Date.now()}.mp3`);
 
-                    // Save to local storage
                     saveToHistory(text, voice, data.audio);
                     renderHistory();
                     
                     if (!isAuto) resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 } else {
-                    throw new Error("API did not return success");
+                    throw new Error("Invalid data format");
                 }
             } catch (error) {
                 console.error("Error:", error);
                 if (!isAuto) {
-                    errorBox.textContent = "Network error. Please try again.";
+                    errorBox.textContent = "Network error. The server might be down or the proxy failed.";
                     errorBox.style.display = 'block';
                 }
             } finally {
                 isGenerating = false;
                 if (!isAuto) {
                     generateBtn.disabled = false;
-                    generateBtn.textContent = "Generate Audio";
+                    generateBtn.classList.remove('loading');
                 }
             }
         }
 
-        // --- History Logic ---
+        // --- Storage & History ---
         function saveToHistory(text, voice, audioUrl) {
-            let history = JSON.parse(localStorage.getItem('dg_history')) || [];
-            
+            let history = JSON.parse(localStorage.getItem('dg_premium_history')) || [];
             const newRecord = {
                 id: Date.now(),
                 text: text.length > 60 ? text.substring(0, 60) + "..." : text,
                 voice: voice,
                 audio: audioUrl,
-                date: new Date().toLocaleDateString()
+                date: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
             };
 
             history.unshift(newRecord);
-            if (history.length > 15) history = history.slice(0, 15);
-            localStorage.setItem('dg_history', JSON.stringify(history));
+            if (history.length > 20) history = history.slice(0, 20);
+            localStorage.setItem('dg_premium_history', JSON.stringify(history));
         }
 
         function renderHistory() {
-            const history = JSON.parse(localStorage.getItem('dg_history')) || [];
-            
+            const history = JSON.parse(localStorage.getItem('dg_premium_history')) || [];
             if (history.length === 0) {
-                historyList.innerHTML = '<p style="color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 20px;">No recent generations.</p>';
+                historyList.innerHTML = '<p style="color: var(--text-muted); font-size: 14px; text-align: center; margin-top: 20px;">No generations yet.</p>';
                 return;
             }
 
-            historyList.innerHTML = history.map(item => `
-                <div class="history-item">
+            historyList.innerHTML = history.map((item, index) => `
+                <div class="history-item" style="animation-delay: ${index * 0.05}s">
                     <div class="history-text">"${item.text}"</div>
                     <div class="history-meta">
-                        <span>Voice: ${item.voice.toUpperCase()}</span>
+                        <span style="text-transform: uppercase;">🎙️ ${item.voice}</span>
                         <span>${item.date}</span>
                     </div>
-                    <audio controls src="${item.audio}" style="width:100%; height: 36px; margin-bottom: 10px;"></audio>
+                    <audio controls src="${item.audio}" style="width:100%; height: 40px; margin-bottom: 12px;"></audio>
                     <a href="${item.audio}" download="dev-gift-${item.voice}-${item.id}.mp3" class="btn-download">Download</a>
                 </div>
             `).join('');
