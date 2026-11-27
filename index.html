@@ -9,268 +9,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-  /* ============ THEME VARIABLES ============ */
   :root[data-theme="light"] {
-    --bg: #f8fafc;
-    --bg-gradient: radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,0) 0, transparent 50%);
-    --surface: rgba(255, 255, 255, 0.7);
-    --surface-solid: #ffffff;
-    --border: rgba(0, 0, 0, 0.06);
-    --border-hover: rgba(0, 0, 0, 0.12);
-    --txt: #0f172a;
-    --txt-2: #475569;
-    --muted: #94a3b8;
-    --primary: #3b82f6;
-    --primary-glow: rgba(59, 130, 246, 0.3);
-    --accent: #8b5cf6;
-    --grad: linear-gradient(135deg, #3b82f6, #8b5cf6);
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
-    --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.1);
-    --skeleton: #e2e8f0;
-    --skeleton-shine: #f1f5f9;
+    --bg: #f8fafc; --bg-gradient: radial-gradient(at 0% 0%, hsla(253,16%,7%,0) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0) 0, transparent 50%);
+    --surface: rgba(255, 255, 255, 0.7); --surface-solid: #ffffff; --border: rgba(0, 0, 0, 0.06); --border-hover: rgba(0, 0, 0, 0.12);
+    --txt: #0f172a; --txt-2: #475569; --muted: #94a3b8; --primary: #3b82f6; --primary-glow: rgba(59, 130, 246, 0.3); --accent: #8b5cf6;
+    --grad: linear-gradient(135deg, #3b82f6, #8b5cf6); --shadow: 0 8px 32px rgba(0, 0, 0, 0.04); --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.1);
+    --skeleton: #e2e8f0; --skeleton-shine: #f1f5f9;
   }
-
   :root[data-theme="dark"] {
-    --bg: #0f172a;
-    --bg-gradient: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,0.1) 0, transparent 50%);
-    --surface: rgba(30, 41, 59, 0.6);
-    --surface-solid: #1e293b;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.15);
-    --txt: #f8fafc;
-    --txt-2: #cbd5e1;
-    --muted: #64748b;
-    --primary: #60a5fa;
-    --primary-glow: rgba(96, 165, 250, 0.3);
-    --accent: #a78bfa;
-    --grad: linear-gradient(135deg, #60a5fa, #a78bfa);
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
-    --skeleton: #1e293b;
-    --skeleton-shine: #334155;
+    --bg: #0f172a; --bg-gradient: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.1) 0, transparent 50%);
+    --surface: rgba(30, 41, 59, 0.6); --surface-solid: #1e293b; --border: rgba(255, 255, 255, 0.08); --border-hover: rgba(255, 255, 255, 0.15);
+    --txt: #f8fafc; --txt-2: #cbd5e1; --muted: #64748b; --primary: #60a5fa; --primary-glow: rgba(96, 165, 250, 0.3); --accent: #a78bfa;
+    --grad: linear-gradient(135deg, #60a5fa, #a78bfa); --shadow: 0 8px 32px rgba(0, 0, 0, 0.2); --shadow-lg: 0 24px 48px -12px rgba(0, 0, 0, 0.4);
+    --skeleton: #1e293b; --skeleton-shine: #334155;
   }
-
-  /* ============ RESET & BASE ============ */
   *{margin:0;padding:0;box-sizing:border-box}
-  body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    background-color: var(--bg);
-    background-image: var(--bg-gradient);
-    color: var(--txt);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 24px;
-    -webkit-font-smoothing: antialiased;
-    transition: background-color 0.4s ease, color 0.4s ease;
-  }
+  body { font-family: 'Inter', system-ui, sans-serif; background-color: var(--bg); background-image: var(--bg-gradient); color: var(--txt); min-height: 100vh; display: flex; flex-direction: column; padding: 24px; -webkit-font-smoothing: antialiased; transition: background-color 0.4s ease, color 0.4s ease; }
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;outline:none}
   input,select,textarea{font-family:inherit;color:inherit;outline:none}
   a{color:inherit;text-decoration:none}
-
-  /* ============ LAYOUT ============ */
   .app-container { max-width: 1100px; width: 100%; margin: 0 auto; flex: 1; display: flex; flex-direction: column; }
 
-  /* ============ HEADER ============ */
-  header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 24px; margin-bottom: 32px;
-    background: var(--surface); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow);
-    transition: all 0.4s ease;
-  }
+  /* HEADER */
+  header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; margin-bottom: 32px; background: var(--surface); backdrop-filter: blur(16px); border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow); transition: all 0.4s ease; }
   .brand { display: flex; align-items: center; gap: 14px; }
-  .logo {
-    width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
-    background: var(--grad); display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 16px -4px var(--primary-glow); color: white; font-size: 20px;
-    transition: transform 0.3s ease;
-  }
+  .logo { width: 44px; height: 44px; border-radius: 12px; background: var(--grad); display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 16px -4px var(--primary-glow); color: white; font-size: 20px; transition: transform 0.3s ease; }
   .brand:hover .logo { transform: rotate(-10deg) scale(1.05); }
   .brand-text h1 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
   .brand-text p { font-size: 12px; color: var(--txt-2); font-weight: 500; margin-top: 2px; }
-
   .header-actions { display: flex; align-items: center; gap: 16px; }
-  .theme-toggle {
-    width: 44px; height: 44px; border-radius: 50%;
-    background: var(--surface-solid); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; color: var(--txt-2); transition: all 0.3s ease;
-    box-shadow: var(--shadow);
-  }
+  .theme-toggle { width: 44px; height: 44px; border-radius: 50%; background: var(--surface-solid); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--txt-2); transition: all 0.3s ease; box-shadow: var(--shadow); }
   .theme-toggle:hover { color: var(--primary); border-color: var(--primary); transform: scale(1.05); }
-
-  .status-badge {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--surface-solid); border: 1px solid var(--border);
-    padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 700;
-    color: var(--txt-2); box-shadow: var(--shadow);
-  }
+  .status-badge { display: flex; align-items: center; gap: 8px; background: var(--surface-solid); border: 1px solid var(--border); padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; color: var(--txt-2); box-shadow: var(--shadow); }
   .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px rgba(16,185,129,0.6); }
 
-  /* ============ MAIN STUDIO CARD ============ */
-  .studio-card {
-    background: var(--surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border); border-radius: 24px; padding: 32px;
-    box-shadow: var(--shadow-lg); margin-bottom: 32px;
-    transition: all 0.4s ease;
-  }
-
+  /* STUDIO CARD */
+  .studio-card { background: var(--surface); backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 24px; padding: 32px; box-shadow: var(--shadow-lg); margin-bottom: 32px; transition: all 0.4s ease; }
   .input-group { margin-bottom: 24px; position: relative; }
   .input-group label { display: block; font-size: 13px; font-weight: 700; color: var(--txt-2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
-  
-  textarea {
-    width: 100%; min-height: 160px; resize: vertical;
-    padding: 20px; border-radius: 16px;
-    background: var(--surface-solid); border: 1px solid var(--border);
-    font-size: 16px; line-height: 1.6; color: var(--txt);
-    transition: all 0.3s ease; box-shadow: var(--shadow);
-  }
+  textarea { width: 100%; min-height: 160px; resize: vertical; padding: 20px; border-radius: 16px; background: var(--surface-solid); border: 1px solid var(--border); font-size: 16px; line-height: 1.6; color: var(--txt); transition: all 0.3s ease; box-shadow: var(--shadow); }
   textarea::placeholder { color: var(--muted); }
   textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
-  
-  .char-counter {
-    position: absolute; bottom: 16px; right: 20px;
-    font-size: 12px; font-weight: 600; color: var(--muted);
-    background: var(--surface-solid); padding: 4px 8px; border-radius: 8px;
-    border: 1px solid var(--border);
-  }
+  .char-counter { position: absolute; bottom: 16px; right: 20px; font-size: 12px; font-weight: 600; color: var(--muted); background: var(--surface-solid); padding: 4px 8px; border-radius: 8px; border: 1px solid var(--border); }
 
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 24px; }
   .select-box label { display: block; font-size: 13px; font-weight: 700; color: var(--txt-2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  
+  /* CUSTOM SELECT */
   .select-wrapper { position: relative; }
-  .select-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; }
-  select {
-    width: 100%; padding: 16px 16px 16px 44px;
-    background: var(--surface-solid); border: 1px solid var(--border);
-    border-radius: 14px; font-size: 15px; font-weight: 600; color: var(--txt);
-    appearance: none; cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow);
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-    background-repeat: no-repeat; background-position: right 16px center;
-  }
-  select:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+  .select-wrapper > i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 14px; pointer-events: none; z-index: 2; }
+  .custom-select-btn { width: 100%; padding: 16px 16px 16px 44px; text-align: left; background: var(--surface-solid); border: 1px solid var(--border); border-radius: 14px; font-size: 15px; font-weight: 600; color: var(--txt); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow); display: flex; justify-content: space-between; align-items: center; }
+  .custom-select-btn:focus, .custom-select-btn.active { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); }
+  .custom-select-btn .fa-chevron-down { font-size: 12px; color: var(--muted); transition: transform 0.3s; }
+  .custom-select-btn.active .fa-chevron-down { transform: rotate(180deg); }
+  
+  .custom-dropdown { position: absolute; top: calc(100% + 8px); left: 0; width: 100%; background: var(--surface-solid); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-lg); z-index: 100; display: none; flex-direction: column; overflow: hidden; animation: dropIn 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+  .custom-dropdown.show { display: flex; }
+  @keyframes dropIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  .dropdown-search { padding: 12px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .dropdown-search i { color: var(--muted); font-size: 14px; }
+  .dropdown-search input { width: 100%; border: none; background: transparent; font-size: 14px; font-weight: 500; color: var(--txt); }
+  .dropdown-list { max-height: 280px; overflow-y: auto; padding: 8px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  .dropdown-list::-webkit-scrollbar { width: 6px; }
+  .dropdown-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+  .dropdown-item { padding: 12px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; color: var(--txt); cursor: pointer; transition: all 0.1s ease; display: flex; align-items: center; justify-content: space-between; }
+  .dropdown-item:hover, .dropdown-item.selected { background: var(--border); }
+  .dropdown-item.selected::after { content: '\f00c'; font-family: 'FontAwesome'; color: var(--primary); font-size: 12px; }
+  .dropdown-empty { padding: 16px; text-align: center; font-size: 13px; color: var(--muted); font-weight: 500; }
 
   .action-row { display: flex; gap: 16px; }
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 16px 28px; border-radius: 14px; font-size: 15px; font-weight: 700;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
-  }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 28px; border-radius: 14px; font-size: 15px; font-weight: 700; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
   .btn:active { transform: scale(0.98); }
-  .btn-primary {
-    flex: 1; background: var(--grad); color: white;
-    box-shadow: 0 8px 24px -6px var(--primary-glow);
-  }
+  .btn-primary { flex: 1; background: var(--grad); color: white; box-shadow: 0 8px 24px -6px var(--primary-glow); }
   .btn-primary:hover { box-shadow: 0 12px 32px -6px var(--primary-glow); transform: translateY(-2px); }
-  .btn-ghost {
-    background: var(--surface-solid); border: 1px solid var(--border); color: var(--txt);
-    box-shadow: var(--shadow);
-  }
+  .btn-ghost { background: var(--surface-solid); border: 1px solid var(--border); color: var(--txt); box-shadow: var(--shadow); }
   .btn-ghost:hover { background: var(--border); border-color: var(--border-hover); }
 
-  /* ============ LOADING ANIMATION (Morphing Button) ============ */
-  .btn-primary.loading {
-    color: transparent; pointer-events: none;
-    animation: morphing 2s infinite linear;
-  }
-  .btn-primary.loading::after {
-    content: ''; position: absolute; width: 20px; height: 20px;
-    border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff;
-    border-radius: 50%; animation: spin 0.8s linear infinite;
-  }
+  /* LOADING */
+  .btn-primary.loading { color: transparent; pointer-events: none; animation: morphing 2s infinite linear; }
+  .btn-primary.loading::after { content: ''; position: absolute; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes morphing {
-    0% { box-shadow: 0 0 0 0 var(--primary-glow); }
-    50% { box-shadow: 0 0 30px 10px var(--primary-glow); }
-    100% { box-shadow: 0 0 0 0 var(--primary-glow); }
-  }
+  @keyframes morphing { 0% { box-shadow: 0 0 0 0 var(--primary-glow); } 50% { box-shadow: 0 0 30px 10px var(--primary-glow); } 100% { box-shadow: 0 0 0 0 var(--primary-glow); } }
 
-  /* ============ RESULT PANEL ============ */
-  .result-panel {
-    margin-top: 24px; border-radius: 16px;
-    background: var(--surface-solid); border: 1px solid var(--border);
-    box-shadow: var(--shadow); display: none; overflow: hidden;
-  }
+  /* PLAYER */
+  .result-panel { margin-top: 24px; border-radius: 16px; background: var(--surface-solid); border: 1px solid var(--border); box-shadow: var(--shadow); display: none; overflow: hidden; }
   .result-panel.show { display: block; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
   @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
   .player-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
   .player-header span { font-size: 13px; font-weight: 700; color: var(--txt-2); text-transform: uppercase; letter-spacing: 0.5px; }
-  
   .player-body { padding: 20px; display: flex; align-items: center; gap: 16px; }
-  .play-btn {
-    width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
-    background: var(--grad); color: white; display: flex; align-items: center; justify-content: center;
-    font-size: 18px; box-shadow: 0 8px 16px -4px var(--primary-glow); transition: all 0.2s ease;
-  }
+  .play-btn { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; background: var(--grad); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; box-shadow: 0 8px 16px -4px var(--primary-glow); transition: all 0.2s ease; }
   .play-btn:hover { transform: scale(1.05); }
   .play-btn.playing { background: #10b981; box-shadow: 0 8px 16px -4px rgba(16,185,129,0.4); }
-  
   .progress-container { flex: 1; }
-  .seek-bar {
-    -webkit-appearance: none; width: 100%; height: 6px; border-radius: 100px;
-    background: var(--border); outline: none; cursor: pointer; margin-bottom: 8px;
-  }
-  .seek-bar::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%;
-    background: var(--primary); cursor: pointer; box-shadow: 0 0 10px var(--primary-glow);
-    transition: transform 0.1s ease;
-  }
-  .seek-bar::-webkit-slider-thumb:hover { transform: scale(1.2); }
+  .seek-bar { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 100px; background: var(--border); outline: none; cursor: pointer; margin-bottom: 8px; }
+  .seek-bar::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--primary); cursor: pointer; box-shadow: 0 0 10px var(--primary-glow); transition: transform 0.1s ease; }
   .time-stamps { display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
-
-  .download-btn {
-    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
-    background: var(--surface); border: 1px solid var(--border); color: var(--txt-2);
-    display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.2s ease;
-  }
+  .download-btn { width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--border); color: var(--txt-2); display: flex; align-items: center; justify-content: center; font-size: 18px; transition: all 0.2s ease; }
   .download-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
 
-  /* ============ SKELETON LOADER ============ */
-  .skeleton-box {
-    display: none; padding: 20px; align-items: center; gap: 16px;
-  }
+  /* SKELETON */
+  .skeleton-box { display: none; padding: 20px; align-items: center; gap: 16px; }
   .result-panel.loading .skeleton-box { display: flex; }
   .result-panel.loading .player-body { display: none; }
-  .skeleton-circle { width: 48px; height: 48px; border-radius: 50%; background: var(--skeleton); flex-shrink: 0; }
+  .skeleton-circle { width: 48px; height: 48px; border-radius: 50%; background: var(--skeleton); flex-shrink: 0; position: relative; overflow: hidden; }
   .skeleton-lines { flex: 1; }
   .skeleton-line { height: 12px; border-radius: 4px; background: var(--skeleton); margin-bottom: 10px; position: relative; overflow: hidden; }
   .skeleton-line.short { width: 60%; }
-  
-  .skeleton-circle::after, .skeleton-line::after {
-    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, var(--skeleton-shine), transparent);
-    animation: shimmer 1.5s infinite;
-  }
+  .skeleton-circle::after, .skeleton-line::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, var(--skeleton-shine), transparent); animation: shimmer 1.5s infinite; }
   @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-  /* ============ SECTIONS (History & Saved) ============ */
+  /* SECTIONS */
   .section-container { margin-bottom: 40px; }
   .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
   .section-title { display: flex; align-items: center; gap: 12px; }
   .section-title h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; }
   .count-badge { background: var(--primary); color: white; font-size: 12px; font-weight: 800; padding: 2px 10px; border-radius: 100px; }
-
   .cards-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
   .empty-state { text-align: center; padding: 40px; background: var(--surface); border: 2px dashed var(--border); border-radius: 20px; color: var(--muted); }
   .empty-state i { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
   .empty-state p { font-size: 14px; font-weight: 500; }
-
-  .glass-card {
-    background: var(--surface); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border); border-radius: 16px; padding: 20px;
-    box-shadow: var(--shadow); transition: all 0.3s ease;
-    animation: slideUp 0.3s ease; display: flex; flex-direction: column; gap: 16px;
-  }
+  .glass-card { background: var(--surface); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); transition: all 0.3s ease; animation: slideUp 0.3s ease; display: flex; flex-direction: column; gap: 16px; }
   .glass-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-  
   .card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
   .card-text { font-size: 15px; font-weight: 600; color: var(--txt); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .card-time { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; }
-  
   .card-tags { display: flex; gap: 8px; flex-wrap: wrap; }
   .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; background: var(--surface-solid); border: 1px solid var(--border); padding: 4px 10px; border-radius: 100px; color: var(--txt-2); }
-  
   .card-actions { display: flex; gap: 10px; flex-wrap: wrap; border-top: 1px solid var(--border); padding-top: 16px; }
   .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 8px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
   .btn-sm-primary { background: var(--primary); color: white; }
@@ -280,51 +145,26 @@
   .btn-sm-danger { background: transparent; color: #ef4444; margin-left: auto; }
   .btn-sm-danger:hover { background: rgba(239, 68, 68, 0.1); }
 
-  /* ============ COMPANY FOOTER ============ */
-  .company-footer {
-    margin-top: auto; padding: 30px 24px; border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
-    background: var(--surface); backdrop-filter: blur(12px); border-radius: 20px;
-    box-shadow: var(--shadow);
-  }
+  /* FOOTER */
+  .company-footer { margin-top: auto; padding: 30px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; background: var(--surface); backdrop-filter: blur(12px); border-radius: 20px; box-shadow: var(--shadow); }
   .footer-left { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--txt-2); font-weight: 500; }
   .footer-left strong { color: var(--txt); font-weight: 700; }
   .footer-right { display: flex; align-items: center; gap: 16px; }
-  .footer-link {
-    display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--primary);
-    padding: 8px 16px; background: var(--surface-solid); border: 1px solid var(--border); border-radius: 100px;
-    transition: all 0.2s ease; box-shadow: var(--shadow);
-  }
+  .footer-link { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; color: var(--primary); padding: 8px 16px; background: var(--surface-solid); border: 1px solid var(--border); border-radius: 100px; transition: all 0.2s ease; box-shadow: var(--shadow); }
   .footer-link:hover { border-color: var(--primary); box-shadow: 0 0 15px var(--primary-glow); }
 
-  /* ============ WHATSAPP FLOAT ============ */
-  .wa-float {
-    position: fixed; bottom: 30px; right: 30px; z-index: 1000;
-    width: 60px; height: 60px; border-radius: 50%; background: #25D366;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 12px 24px -6px rgba(37,211,102,0.5); color: white; font-size: 30px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
+  /* WHATSAPP */
+  .wa-float { position: fixed; bottom: 30px; right: 30px; z-index: 1000; width: 60px; height: 60px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: 0 12px 24px -6px rgba(37,211,102,0.5); color: white; font-size: 30px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
   .wa-float:hover { transform: scale(1.1) rotate(10deg); box-shadow: 0 16px 32px -6px rgba(37,211,102,0.6); }
 
-  /* ============ TOASTS ============ */
+  /* TOASTS */
   .toasts { position: fixed; top: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column; gap: 12px; }
-  .toast {
-    display: flex; align-items: center; gap: 12px; background: var(--surface-solid);
-    padding: 16px 20px; border-radius: 12px; border: 1px solid var(--border);
-    box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600;
-    animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  .toast { display: flex; align-items: center; gap: 12px; background: var(--surface-solid); padding: 16px 20px; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); font-size: 14px; font-weight: 600; animation: toastIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
   @keyframes toastIn { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
   .toast.out { animation: toastOut 0.3s forwards; }
   @keyframes toastOut { to { opacity: 0; transform: translateX(50px); } }
-  .toast.success i { color: #10b981; }
-  .toast.error i { color: #ef4444; }
-  .toast.info i { color: var(--primary); }
 
-  /* ============ RESPONSIVE ============ */
   @media (max-width: 768px) {
-    .grid-2 { grid-template-columns: 1fr; }
     .action-row { flex-direction: column; }
     .btn-ghost { width: 100%; }
     .company-footer { flex-direction: column; text-align: center; justify-content: center; }
@@ -336,7 +176,6 @@
 <body>
 
 <div class="app-container">
-  <!-- HEADER -->
   <header>
     <div class="brand">
       <div class="logo"><i class="fas fa-waveform"></i></div>
@@ -351,7 +190,6 @@
     </div>
   </header>
 
-  <!-- STUDIO CARD -->
   <main class="studio-card">
     <div class="input-group">
       <label>Input Text</label>
@@ -359,33 +197,27 @@
       <div class="char-counter"><span id="charCount">0</span> / 2000</div>
     </div>
 
+    <!-- VOICE SELECT ONLY (No Language) -->
     <div class="grid-2">
       <div class="select-box">
         <label>Voice Model</label>
         <div class="select-wrapper">
           <i class="fas fa-microphone-lines"></i>
-          <select id="voiceSelect">
-            <option value="woman1">Female Voice 1 (Smooth)</option>
-            <option value="man1">Male Voice 1 (Deep)</option>
-            <option value="woman2">Female Voice 2 (Bright)</option>
-            <option value="man2">Male Voice 2 (Clear)</option>
-          </select>
-        </div>
-      </div>
-      <div class="select-box">
-        <label>Language</label>
-        <div class="select-wrapper">
-          <i class="fas fa-globe"></i>
-          <select id="langSelect">
-            <option value="English">English</option>
-            <option value="French">French</option>
-            <option value="Spanish">Spanish</option>
-            <option value="German">German</option>
-            <option value="Hausa">Hausa</option>
-            <option value="Yoruba">Yoruba</option>
-            <option value="Igbo">Igbo</option>
-            <option value="Arabic">Arabic</option>
-          </select>
+          <div class="custom-select-btn" id="voiceSelectBtn">
+            <span id="voiceSelectedText">Select Voice...</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          
+          <div class="custom-dropdown" id="voiceDropdown">
+            <div class="dropdown-search">
+              <i class="fas fa-search"></i>
+              <input type="text" id="voiceSearch" placeholder="Search 40+ voices..." autocomplete="off">
+            </div>
+            <div class="dropdown-list" id="voiceList">
+              <!-- Options injected by JS -->
+            </div>
+          </div>
+          <input type="hidden" id="voiceValue" value="">
         </div>
       </div>
     </div>
@@ -399,7 +231,7 @@
       </button>
     </div>
 
-    <!-- RESULT PANEL & SKELETON -->
+    <!-- RESULT PANEL -->
     <div class="result-panel" id="resultPanel">
       <div class="player-header">
         <span><i class="fas fa-volume-high"></i> Output Audio</span>
@@ -427,7 +259,6 @@
     </div>
   </main>
 
-  <!-- HISTORY -->
   <section class="section-container" id="historyPanel">
     <div class="section-header">
       <div class="section-title">
@@ -439,7 +270,6 @@
     <div class="cards-grid" id="historyCards"></div>
   </section>
 
-  <!-- SAVED DRAFTS -->
   <section class="section-container" id="savedPanel">
     <div class="section-header">
       <div class="section-title">
@@ -450,7 +280,6 @@
     <div class="cards-grid" id="savedCards"></div>
   </section>
 
-  <!-- COMPANY FOOTER -->
   <footer class="company-footer">
     <div class="footer-left">
       <i class="fas fa-copyright" style="color: var(--muted);"></i> 2026 <strong>Dev Gift</strong>. All rights reserved.
@@ -464,12 +293,10 @@
   </footer>
 </div>
 
-<!-- WHATSAPP -->
 <a class="wa-float" href="https://wa.me/2349164624021" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- TOASTS -->
 <div class="toasts" id="toasts"></div>
 
 <script>
@@ -478,8 +305,6 @@
    ============================================================ */
 const themeToggle = document.getElementById('themeToggle');
 const htmlEl = document.documentElement;
-
-// Check local storage for theme, default to light
 const savedTheme = localStorage.getItem('devgift_theme') || 'light';
 htmlEl.setAttribute('data-theme', savedTheme);
 updateThemeIcon(savedTheme);
@@ -497,16 +322,25 @@ function updateThemeIcon(theme) {
 }
 
 /* ============================================================
-   CONSTANTS & DOM
+   MASTER VOICE LIST (From your screenshots)
    ============================================================ */
-const LS_HISTORY = 'devgift_history_v2';
-const LS_SAVED   = 'devgift_saved_v2';
-const MAX_HISTORY = 30;
-const MAX_SAVED   = 50;
+const VOICES = [
+  "FUSSY MALE", "JOSY", "CUTE BOY", "MALE PROFESSOR", "MALE SCIENTIST", "NORMAL MALE", 
+  "BRITISH MALE", "AMERICAN MALE", "MALE STORYTELLER", "CHARMING MALE", "CONFIDENT MALE", 
+  "ENERGETIC MALE", "SERIOUS MALE", "MODERN BLOGGER", "ALFRED", "GOOD GUY", "QUEEN", 
+  "FEMALE VOCALIST", "BRITISH FEMALE", "AMERICAN FEMALE", "FEMALE STORYTELLER", 
+  "NARRATIVE FEMALE", "CHARMING FEMALE", "SERIOUS FEMALE", "ENERGETIC FEMALE", 
+  "EMPATHETIC FEMALE", "CHILL GIRL", "JESSIE FEMALE", "ADORABLE GIRL", "COTTAGECORE", 
+  "COZY", "OPERA", "OPEN MIC", "QUIRKY TIME", "CLASSIC ELECTRIC", "POP LULLABY", 
+  "EUPHORIC", "KAWAII VOCALIST", "KIDS VOCALIST", "WACKY", "BESTIE", "ELFY", "SANTA III"
+];
 
+/* ============================================================
+   DOM ELEMENTS
+   ============================================================ */
 const $ = (id) => document.getElementById(id);
 const textInput = $('textInput'), charCount = $('charCount');
-const voiceSelect = $('voiceSelect'), langSelect = $('langSelect');
+const voiceSelectBtn = $('voiceSelectBtn'), voiceDropdown = $('voiceDropdown'), voiceSearch = $('voiceSearch'), voiceList = $('voiceList'), voiceSelectedText = $('voiceSelectedText'), voiceValue = $('voiceValue');
 const generateBtn = $('generateBtn'), saveBtn = $('saveBtn');
 const resultPanel = $('resultPanel'), playToggle = $('playToggle'), seekBar = $('seekBar');
 const curTime = $('curTime'), durTime = $('durTime'), dlBtn = $('dlBtn');
@@ -514,6 +348,8 @@ const savedCards = $('savedCards'), savedCount = $('savedCount');
 const historyCards = $('historyCards'), historyCount = $('historyCount');
 const clearAllBtn = $('clearAllBtn'), toasts = $('toasts');
 
+const LS_HISTORY = 'devgift_history_v3';
+const LS_SAVED   = 'devgift_saved_v3';
 let currentAudio = null, currentItem = null, history = [], saved = [];
 
 /* ============================================================
@@ -545,16 +381,59 @@ function showToast(msg, type = 'info'){
 }
 
 /* ============================================================
-   STORAGE
+   CUSTOM DROPDOWN LOGIC
    ============================================================ */
-function loadHistory(){ try { history = JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch { history = []; } if (!Array.isArray(history)) history = []; }
-function persistHistory(){ try { localStorage.setItem(LS_HISTORY, JSON.stringify(history)); } catch {} if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY); }
-function loadSaved(){ try { saved = JSON.parse(localStorage.getItem(LS_SAVED) || '[]'); } catch { saved = []; } if (!Array.isArray(saved)) saved = []; }
-function persistSaved(){ try { localStorage.setItem(LS_SAVED, JSON.stringify(saved)); } catch {} if (saved.length > MAX_SAVED) saved = saved.slice(0, MAX_SAVED); }
+function renderVoiceList(filter = "") {
+  const filtered = VOICES.filter(v => v.toLowerCase().includes(filter.toLowerCase()));
+  if (filtered.length === 0) {
+    voiceList.innerHTML = `<div class="dropdown-empty">No voices found</div>`;
+    return;
+  }
+  voiceList.innerHTML = filtered.map(v => `
+    <div class="dropdown-item ${v === voiceValue.value ? 'selected' : ''}" data-voice="${v}">
+      ${v}
+    </div>
+  `).join('');
+}
+
+voiceSelectBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  voiceDropdown.classList.toggle('show');
+  voiceSelectBtn.classList.toggle('active');
+  if (voiceDropdown.classList.contains('show')) {
+    voiceSearch.value = '';
+    renderVoiceList();
+    voiceSearch.focus();
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (!voiceSelectBtn.contains(e.target) && !voiceDropdown.contains(e.target)) {
+    voiceDropdown.classList.remove('show');
+    voiceSelectBtn.classList.remove('active');
+  }
+});
+
+voiceSearch.addEventListener('input', (e) => renderVoiceList(e.target.value));
+
+voiceList.addEventListener('click', (e) => {
+  const item = e.target.closest('.dropdown-item');
+  if (!item) return;
+  const selected = item.dataset.voice;
+  voiceValue.value = selected;
+  voiceSelectedText.textContent = selected;
+  voiceDropdown.classList.remove('show');
+  voiceSelectBtn.classList.remove('active');
+});
 
 /* ============================================================
-   RENDER
+   STORAGE & RENDER
    ============================================================ */
+function loadHistory(){ try { history = JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch { history = []; } }
+function persistHistory(){ try { localStorage.setItem(LS_HISTORY, JSON.stringify(history)); } catch {} }
+function loadSaved(){ try { saved = JSON.parse(localStorage.getItem(LS_SAVED) || '[]'); } catch { saved = []; } }
+function persistSaved(){ try { localStorage.setItem(LS_SAVED, JSON.stringify(saved)); } catch {} }
+
 function renderHistory(){
   historyCount.textContent = history.length;
   if (!history.length){ historyCards.innerHTML = `<div class="empty-state"><i class="fas fa-headphones"></i><p>Your generated audio will appear here.</p></div>`; return; }
@@ -566,7 +445,6 @@ function renderHistory(){
       </div>
       <div class="card-tags">
         <span class="tag"><i class="fas fa-microphone"></i> ${escapeHtml(item.voice)}</span>
-        <span class="tag"><i class="fas fa-globe"></i> ${escapeHtml(item.language)}</span>
       </div>
       <div class="card-actions">
         <button class="btn-sm btn-sm-primary" data-act="play" data-id="${item.id}"><i class="fas fa-play"></i> Play</button>
@@ -575,6 +453,7 @@ function renderHistory(){
       </div>
     </div>`).join('');
 }
+
 function renderSaved(){
   savedCount.textContent = saved.length;
   if (!saved.length){ savedCards.innerHTML = `<div class="empty-state"><i class="fas fa-bookmark"></i><p>Save text drafts to generate them later.</p></div>`; return; }
@@ -586,10 +465,9 @@ function renderSaved(){
       </div>
       <div class="card-tags">
         <span class="tag"><i class="fas fa-microphone"></i> ${escapeHtml(item.voice)}</span>
-        <span class="tag"><i class="fas fa-globe"></i> ${escapeHtml(item.language)}</span>
       </div>
       <div class="card-actions">
-        <button class="btn-sm btn-sm-primary" data-sact="generate" data-id="${item.id}"><i class="fas fa-bolt"></i> Generate Now</button>
+        <button class="btn-sm btn-sm-primary" data-sact="generate" data-id="${item.id}"><i class="fas fa-bolt"></i> Generate</button>
         <button class="btn-sm btn-sm-ghost" data-sact="load" data-id="${item.id}"><i class="fas fa-pen"></i> Edit</button>
         <button class="btn-sm btn-sm-danger" data-sact="delete" data-id="${item.id}"><i class="fas fa-trash"></i> Delete</button>
       </div>
@@ -599,9 +477,7 @@ function renderSaved(){
 /* ============================================================
    INPUT & PLAYER
    ============================================================ */
-textInput.addEventListener('input', () => {
-  charCount.textContent = textInput.value.length;
-});
+textInput.addEventListener('input', () => { charCount.textContent = textInput.value.length; });
 
 function setupAudio(url){
   if (currentAudio){ currentAudio.pause(); currentAudio.src = ''; }
@@ -623,9 +499,6 @@ playToggle.addEventListener('click', () => {
 seekBar.addEventListener('input', () => { if (currentAudio && currentAudio.duration) currentAudio.currentTime = (seekBar.value / 100) * currentAudio.duration; });
 dlBtn.addEventListener('click', () => { if (currentItem) downloadAudio(currentItem.audio, `devgift-${currentItem.id}.mp3`); });
 
-/* ============================================================
-   DOWNLOAD
-   ============================================================ */
 async function downloadAudio(url, filename){
   try {
     const res = await fetch(url, { mode: 'cors' });
@@ -640,31 +513,31 @@ async function downloadAudio(url, filename){
 }
 
 /* ============================================================
-   GENERATE (CALLS BACKEND)
+   GENERATE (NEW API)
    ============================================================ */
 async function generateSpeech(opts = {}){
   const text = (opts.text !== undefined ? opts.text : textInput.value).trim();
-  const voice = opts.voice || voiceSelect.value;
-  const language = opts.language || langSelect.value;
+  const voice = opts.voice || voiceValue.value;
 
   if (!text){ showToast('Please enter text first.', 'warn'); textInput.focus(); return; }
+  if (!voice){ showToast('Please select a voice model.', 'warn'); voiceSelectBtn.click(); return; }
 
-  // Morphing button animation state
   generateBtn.classList.add('loading');
   generateBtn.innerHTML = '<i class="fas fa-bolt"></i> Synthesizing...';
   
-  // Show skeleton loader
   resultPanel.classList.add('show', 'loading');
 
-  const url = `/api/generate?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}&language=${encodeURIComponent(language)}`;
+  const url = `/api/generate?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}`;
 
   let data;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Network error');
     data = await res.json();
+    
+    // Check for new API success and result format
     if (!data || data.success !== true) throw new Error((data && data.message) || 'Generation failed');
-    if (!data.audio) throw new Error('No audio returned');
+    if (!data.result) throw new Error('No audio URL returned');
   } catch (err) {
     resultPanel.classList.remove('show', 'loading');
     generateBtn.classList.remove('loading');
@@ -673,10 +546,17 @@ async function generateSpeech(opts = {}){
     return;
   }
 
-  // Remove skeleton
   resultPanel.classList.remove('loading');
   
-  const item = { id: uid(), text: data.text || text, voice: data.voice || voice, language: data.language || language, audio: data.audio, timestamp: data.timestamp || new Date().toISOString() };
+  // Mapping to new API response fields (result, voice)
+  const item = { 
+    id: uid(), 
+    text: text, 
+    voice: data.voice || voice, 
+    audio: data.result, 
+    timestamp: data.timestamp || new Date().toISOString() 
+  };
+  
   currentItem = item;
   setupAudio(item.audio);
 
@@ -684,7 +564,7 @@ async function generateSpeech(opts = {}){
   catch { window.open(item.audio, '_blank'); showToast('🎵 Opened in new tab', 'success'); }
 
   history.unshift(item);
-  if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
+  if (history.length > 30) history = history.slice(0, 30);
   persistHistory(); renderHistory();
 
   generateBtn.classList.remove('loading');
@@ -699,8 +579,9 @@ generateBtn.addEventListener('click', () => generateSpeech());
 saveBtn.addEventListener('click', () => {
   const text = textInput.value.trim();
   if (!text){ showToast('Please enter text to save.', 'warn'); textInput.focus(); return; }
-  saved.unshift({ id: uid(), text, voice: voiceSelect.value, language: langSelect.value, timestamp: new Date().toISOString() });
-  if (saved.length > MAX_SAVED) saved = saved.slice(0, MAX_SAVED);
+  
+  saved.unshift({ id: uid(), text, voice: voiceValue.value || "NORMAL MALE", timestamp: new Date().toISOString() });
+  if (saved.length > 50) saved = saved.slice(0, 50);
   persistSaved(); renderSaved(); showToast('💾 Draft saved successfully', 'success');
 });
 
@@ -736,11 +617,11 @@ savedCards.addEventListener('click', (e) => {
   const item = saved.find(x => x.id === id); if (!item) return;
 
   if (act === 'generate'){
-    textInput.value = item.text; voiceSelect.value = item.voice; langSelect.value = item.language; charCount.textContent = item.text.length;
-    generateSpeech({ text: item.text, voice: item.voice, language: item.language });
+    textInput.value = item.text; voiceValue.value = item.voice; voiceSelectedText.textContent = item.voice; charCount.textContent = item.text.length;
+    generateSpeech({ text: item.text, voice: item.voice });
   }
   if (act === 'load'){
-    textInput.value = item.text; voiceSelect.value = item.voice; langSelect.value = item.language; charCount.textContent = item.text.length;
+    textInput.value = item.text; voiceValue.value = item.voice; voiceSelectedText.textContent = item.voice; charCount.textContent = item.text.length;
     textInput.focus(); textInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); showToast('Loaded into editor', 'info');
   }
   if (act === 'delete'){
@@ -754,6 +635,10 @@ savedCards.addEventListener('click', (e) => {
    ============================================================ */
 function init(){
   loadHistory(); loadSaved(); renderHistory(); renderSaved();
+  renderVoiceList();
+  // Default voice
+  voiceValue.value = "NORMAL MALE";
+  voiceSelectedText.textContent = "NORMAL MALE";
 }
 init();
 </script>
