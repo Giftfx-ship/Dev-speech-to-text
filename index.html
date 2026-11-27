@@ -161,6 +161,41 @@
   .toast { display: flex; align-items: center; gap: 10px; background: var(--surface-solid); padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow-lg); font-size: 13px; font-weight: 500; color: var(--txt); animation: toastIn 0.2s ease; }
   @keyframes toastIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+  /* MODAL / POPUP */
+  .modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; z-index: 3000;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-overlay.show { opacity: 1; pointer-events: auto; }
+  .modal-content {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 20px;
+    padding: 32px; width: 90%; max-width: 400px; text-align: center;
+    box-shadow: var(--shadow-lg); position: relative;
+    transform: translateY(20px); transition: transform 0.3s ease;
+  }
+  .modal-overlay.show .modal-content { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); background: var(--surface-solid); border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .modal-close:hover { color: var(--txt); background: var(--surface-hover); }
+  .modal-icon {
+    width: 64px; height: 64px; border-radius: 16px; background: var(--grad);
+    margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--primary-text); box-shadow: 0 8px 24px -6px rgba(255,255,255,0.2);
+  }
+  .modal-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .modal-text { font-size: 14px; color: var(--txt-2); margin-bottom: 24px; line-height: 1.5; }
+  .modal-actions { display: flex; flex-direction: column; gap: 12px; }
+  .btn-download { background: #10b981; color: white; border: 1px solid #059669; }
+  .btn-download:hover { background: #059669; }
+  .btn-later { background: transparent; border: 1px solid var(--border); color: var(--txt); }
+  .btn-later:hover { background: var(--surface-hover); }
+
   @media (max-width: 900px) {
     .studio-layout { grid-template-columns: 1fr; }
     .company-footer { flex-direction: column; text-align: center; }
@@ -168,6 +203,22 @@
 </style>
 </head>
 <body>
+
+<!-- DOWNLOAD POPUP MODAL -->
+<div class="modal-overlay show" id="downloadModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    <div class="modal-icon"><i class="fas fa-mobile-screen-button"></i></div>
+    <h2 class="modal-title">Get the Mobile App</h2>
+    <p class="modal-text">Download our Android app for a faster, smoother experience. Generate audio on the go!</p>
+    <div class="modal-actions">
+      <a href="https://www.mediafire.com/file/vfrj2uxt05y3hhg/Text+to+speech.apk/file" target="_blank" class="btn btn-download" onclick="closeModal()">
+        <i class="fas fa-download"></i> Download Now
+      </a>
+      <button class="btn btn-later" onclick="closeModal()">Maybe Later</button>
+    </div>
+  </div>
+</div>
 
 <div class="app-container">
   <header>
@@ -317,6 +368,13 @@
 <div class="toasts" id="toasts"></div>
 
 <script>
+/* ============================================================
+   MODAL LOGIC
+   ============================================================ */
+function closeModal() {
+  document.getElementById('downloadModal').classList.remove('show');
+}
+
 /* ============================================================
    THEME MANAGER
    ============================================================ */
@@ -545,7 +603,7 @@ async function generateSpeech(opts = {}){
   } catch (err) {
     resultPanel.classList.remove('show', 'loading');
     generateBtn.classList.remove('loading');
-    setGenerationType(currentGenType); // reset button text
+    setGenerationType(currentGenType);
     showToast('❌ ' + (err.message || 'Failed'), 'error');
     return;
   }
@@ -572,7 +630,7 @@ async function generateSpeech(opts = {}){
   persistHistory(); renderHistory();
 
   generateBtn.classList.remove('loading');
-  setGenerationType(currentGenType); // reset button text
+  setGenerationType(currentGenType);
 }
 
 generateBtn.addEventListener('click', () => generateSpeech());
