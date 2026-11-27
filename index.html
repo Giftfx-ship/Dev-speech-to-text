@@ -12,265 +12,112 @@
   /* ============ RESET & VARS ============ */
   *{margin:0;padding:0;box-sizing:border-box}
   :root{
-    --bg:#f5f7ff;
-    --bg-2:#eef1f8;
-    --card:rgba(255,255,255,.82);
-    --card-solid:#ffffff;
-    --line:#e6eaf2;
-    --line-2:#d9dfec;
-    --txt:#1a1d2b;
-    --txt-2:#4b5163;
-    --muted:#7c8399;
-    --primary:#4f46e5;
-    --primary-2:#7c3aed;
-    --accent:#06b6d4;
-    --success:#10b981;
-    --danger:#ef4444;
-    --warn:#f59e0b;
-    --radius:18px;
-    --radius-sm:12px;
-    --shadow-sm:0 2px 8px rgba(20,24,40,.04);
-    --shadow:0 8px 24px -6px rgba(20,24,40,.08);
+    --bg:#f5f7ff; --bg-2:#eef1f8; --card:rgba(255,255,255,.82); --card-solid:#ffffff;
+    --line:#e6eaf2; --line-2:#d9dfec; --txt:#1a1d2b; --txt-2:#4b5163; --muted:#7c8399;
+    --primary:#4f46e5; --primary-2:#7c3aed; --success:#10b981; --danger:#ef4444; --warn:#f59e0b;
+    --radius:18px; --radius-sm:12px;
+    --shadow-sm:0 2px 8px rgba(20,24,40,.04); --shadow:0 8px 24px -6px rgba(20,24,40,.08);
     --shadow-lg:0 24px 60px -18px rgba(79,70,229,.25);
-    --grad:linear-gradient(135deg,#4f46e5,#7c3aed);
-    --grad-soft:linear-gradient(135deg,rgba(79,70,229,.1),rgba(124,58,237,.1));
+    --grad:linear-gradient(135deg,#4f46e5,#7c3aed); --grad-soft:linear-gradient(135deg,rgba(79,70,229,.1),rgba(124,58,237,.1));
   }
   html{scroll-behavior:smooth}
   body{
     font-family:'Inter',system-ui,-apple-system,sans-serif;
-    background:
-      radial-gradient(900px 500px at 10% -10%,rgba(99,102,241,.13),transparent 60%),
-      radial-gradient(800px 500px at 100% 0%,rgba(6,182,212,.1),transparent 60%),
-      radial-gradient(700px 500px at 50% 110%,rgba(124,58,237,.1),transparent 60%),
-      linear-gradient(180deg,var(--bg),var(--bg-2));
-    color:var(--txt);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    padding:22px 16px 130px;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    line-height:1.5;
+    background:radial-gradient(900px 500px at 10% -10%,rgba(99,102,241,.13),transparent 60%),radial-gradient(800px 500px at 100% 0%,rgba(6,182,212,.1),transparent 60%),radial-gradient(700px 500px at 50% 110%,rgba(124,58,237,.1),transparent 60%),linear-gradient(180deg,var(--bg),var(--bg-2));
+    color:var(--txt); min-height:100vh; display:flex; flex-direction:column; padding:22px 16px 130px;
+    -webkit-font-smoothing:antialiased; line-height:1.5;
   }
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   input,select,textarea{font-family:inherit;color:inherit}
   a{color:inherit}
-
-  /* ============ LAYOUT ============ */
   .app{max-width:980px;width:100%;margin:0 auto;flex:1}
 
-  /* ============ HEADER ============ */
-  header{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:16px;flex-wrap:wrap;margin-bottom:26px;
-  }
+  /* HEADER */
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:26px}
   .brand{display:flex;align-items:center;gap:14px}
-  .logo{
-    width:52px;height:52px;border-radius:16px;flex-shrink:0;
-    background:var(--grad);display:flex;align-items:center;justify-content:center;
-    box-shadow:0 14px 30px -10px rgba(79,70,229,.5);
-    position:relative;overflow:hidden;
-  }
+  .logo{width:52px;height:52px;border-radius:16px;flex-shrink:0;background:var(--grad);display:flex;align-items:center;justify-content:center;box-shadow:0 14px 30px -10px rgba(79,70,229,.5);position:relative;overflow:hidden}
   .logo::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.3))}
   .logo i{font-size:25px;color:#fff;position:relative;z-index:1}
-  .brand h1{
-    font-size:23px;font-weight:800;letter-spacing:-.6px;line-height:1.1;
-    background:linear-gradient(135deg,#1e1b4b,#4f46e5 60%,#06b6d4);
-    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  }
+  .brand h1{font-size:23px;font-weight:800;letter-spacing:-.6px;line-height:1.1;background:linear-gradient(135deg,#1e1b4b,#4f46e5 60%,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .brand p{font-size:12.5px;color:var(--muted);font-weight:500;margin-top:2px;letter-spacing:.2px}
-  .pill{
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--card);border:1px solid var(--line);
-    padding:9px 16px;border-radius:100px;font-size:12.5px;font-weight:600;
-    color:var(--txt-2);backdrop-filter:blur(10px);box-shadow:var(--shadow-sm);
-  }
+  .pill{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);padding:9px 16px;border-radius:100px;font-size:12.5px;font-weight:600;color:var(--txt-2);backdrop-filter:blur(10px);box-shadow:var(--shadow-sm)}
   .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 2s infinite}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)}70%{box-shadow:0 0 0 8px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
 
-  /* ============ STUDIO CARD ============ */
-  .studio{
-    background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-    border:1px solid var(--line);border-radius:24px;padding:24px;
-    box-shadow:var(--shadow-lg);margin-bottom:22px;position:relative;overflow:hidden;
-  }
-  .studio::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:3px;
-    background:var(--grad);opacity:.9;
-  }
-  .section-label{
-    display:flex;align-items:center;gap:8px;
-    font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
-    color:var(--muted);margin-bottom:10px;
-  }
+  /* STUDIO CARD */
+  .studio{background:var(--card);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow-lg);margin-bottom:22px;position:relative;overflow:hidden}
+  .studio::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:.9}
+  .section-label{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
   .section-label i{color:var(--primary);font-size:13px}
-
   .textarea-wrap{position:relative;margin-bottom:16px}
-  textarea{
-    width:100%;min-height:120px;max-height:280px;resize:vertical;
-    padding:16px 44px 16px 16px;border-radius:var(--radius-sm);
-    background:var(--card-solid);border:1.5px solid var(--line-2);
-    font-size:15px;line-height:1.55;color:var(--txt);
-    transition:border-color .15s,box-shadow .15s;
-  }
+  textarea{width:100%;min-height:120px;max-height:280px;resize:vertical;padding:16px 44px 16px 16px;border-radius:var(--radius-sm);background:var(--card-solid);border:1.5px solid var(--line-2);font-size:15px;line-height:1.55;color:var(--txt);transition:border-color .15s,box-shadow .15s}
   textarea::placeholder{color:#a3aabf}
   textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(79,70,229,.1)}
-  .clear-btn{
-    position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;
-    background:#f1f3f9;color:var(--muted);display:none;align-items:center;justify-content:center;
-    font-size:12px;transition:.15s;
-  }
+  .clear-btn{position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:#f1f3f9;color:var(--muted);display:none;align-items:center;justify-content:center;font-size:12px;transition:.15s}
   .clear-btn:hover{background:#e6e9f3;color:var(--txt)}
   .clear-btn.show{display:flex}
-  .textarea-meta{
-    display:flex;justify-content:flex-end;margin-top:6px;
-    font-size:11.5px;color:var(--muted);font-weight:500;
-  }
+  .textarea-meta{display:flex;justify-content:flex-end;margin-top:6px;font-size:11.5px;color:var(--muted);font-weight:500}
   .textarea-meta.warn{color:var(--warn)}
-
   .selects-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
   .select-field{position:relative}
-  .select-field label{
-    display:block;font-size:11.5px;font-weight:600;color:var(--muted);
-    margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase;
-  }
+  .select-field label{display:block;font-size:11.5px;font-weight:600;color:var(--muted);margin-bottom:6px;letter-spacing:.3px;text-transform:uppercase}
   .select-field .wrap{position:relative}
-  .select-field i{
-    position:absolute;left:14px;top:50%;transform:translateY(-50%);
-    color:var(--primary);font-size:14px;pointer-events:none;
-  }
-  select{
-    width:100%;padding:12px 36px 12px 38px;
-    background:var(--card-solid);border:1.5px solid var(--line-2);
-    border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--txt);
-    appearance:none;-webkit-appearance:none;cursor:pointer;
-    transition:border-color .15s,box-shadow .15s;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237c8399' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
-    background-repeat:no-repeat;background-position:right 14px center;
-  }
+  .select-field i{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--primary);font-size:14px;pointer-events:none}
+  select{width:100%;padding:12px 36px 12px 38px;background:var(--card-solid);border:1.5px solid var(--line-2);border-radius:var(--radius-sm);font-size:14px;font-weight:500;color:var(--txt);appearance:none;-webkit-appearance:none;cursor:pointer;transition:border-color .15s,box-shadow .15s;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237c8399' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");background-repeat:no-repeat;background-position:right 14px center}
   select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(79,70,229,.1)}
-
   .actions-row{display:flex;gap:10px;flex-wrap:wrap}
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:9px;
-    padding:13px 22px;border-radius:14px;font-size:14.5px;font-weight:700;
-    letter-spacing:.2px;transition:transform .12s,box-shadow .15s,opacity .15s,background .15s;
-    white-space:nowrap;user-select:none;
-  }
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:13px 22px;border-radius:14px;font-size:14.5px;font-weight:700;letter-spacing:.2px;transition:transform .12s,box-shadow .15s,opacity .15s,background .15s;white-space:nowrap;user-select:none}
   .btn:active{transform:scale(.98)}
-  .btn-primary{
-    flex:1;min-width:180px;background:var(--grad);color:#fff;
-    box-shadow:0 12px 24px -8px rgba(79,70,229,.5);
-  }
+  .btn-primary{flex:1;min-width:180px;background:var(--grad);color:#fff;box-shadow:0 12px 24px -8px rgba(79,70,229,.5)}
   .btn-primary:hover{box-shadow:0 16px 30px -8px rgba(79,70,229,.6)}
   .btn-primary.busy{pointer-events:none;opacity:.85}
-  .btn-ghost{
-    background:var(--card-solid);border:1.5px solid var(--line-2);color:var(--txt-2);
-  }
+  .btn-ghost{background:var(--card-solid);border:1.5px solid var(--line-2);color:var(--txt-2)}
   .btn-ghost:hover{border-color:var(--primary);color:var(--primary);background:#f8f7ff}
   .btn-ghost:disabled{opacity:.4;pointer-events:none}
 
-  /* ============ RESULT PLAYER ============ */
-  .result-panel{
-    margin-top:18px;padding:16px;border-radius:var(--radius-sm);
-    background:linear-gradient(135deg,#f8f7ff,#f0f4ff);
-    border:1.5px solid #e4e1ff;display:none;
-  }
+  /* RESULT PLAYER */
+  .result-panel{margin-top:18px;padding:16px;border-radius:var(--radius-sm);background:linear-gradient(135deg,#f8f7ff,#f0f4ff);border:1.5px solid #e4e1ff;display:none}
   .result-panel.show{display:block;animation:slideUp .25s ease}
   @keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
   .result-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}
   .result-head .label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--primary)}
   .result-head .attr{font-size:11.5px;color:var(--muted);font-weight:500}
   .result-head .attr i{color:var(--success);margin-right:4px}
-  .player{
-    display:flex;align-items:center;gap:12px;background:#fff;
-    padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-sm);
-  }
-  .play-toggle{
-    width:42px;height:42px;border-radius:50%;flex-shrink:0;
-    background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;
-    font-size:15px;box-shadow:0 8px 16px -6px rgba(79,70,229,.5);transition:.15s;
-  }
+  .player{display:flex;align-items:center;gap:12px;background:#fff;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow-sm)}
+  .play-toggle{width:42px;height:42px;border-radius:50%;flex-shrink:0;background:var(--grad);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 8px 16px -6px rgba(79,70,229,.5);transition:.15s}
   .play-toggle:hover{transform:scale(1.05)}
   .play-toggle.playing{background:var(--success);box-shadow:0 8px 16px -6px rgba(16,185,129,.5)}
   .player-info{flex:1;min-width:0}
-  .player-info .seek{
-    -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:100px;
-    background:#e9ebf5;outline:none;cursor:pointer;margin-bottom:6px;
-  }
-  .player-info .seek::-webkit-slider-thumb{
-    -webkit-appearance:none;width:16px;height:16px;border-radius:50%;
-    background:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.2);cursor:pointer;
-  }
-  .player-info .seek::-moz-range-thumb{
-    width:16px;height:16px;border-radius:50%;border:none;
-    background:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.2);cursor:pointer;
-  }
+  .player-info .seek{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:100px;background:#e9ebf5;outline:none;cursor:pointer;margin-bottom:6px}
+  .player-info .seek::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.2);cursor:pointer}
+  .player-info .seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;border:none;background:var(--primary);box-shadow:0 0 0 3px rgba(79,70,229,.2);cursor:pointer}
   .player-times{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-weight:600}
-  .dl-btn{
-    width:42px;height:42px;border-radius:12px;flex-shrink:0;
-    background:#f1f3f9;color:var(--txt-2);display:flex;align-items:center;justify-content:center;
-    font-size:15px;transition:.15s;
-  }
+  .dl-btn{width:42px;height:42px;border-radius:12px;flex-shrink:0;background:#f1f3f9;color:var(--txt-2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:.15s}
   .dl-btn:hover{background:var(--primary);color:#fff}
 
-  /* ============ SECTIONS (Saved + History) ============ */
+  /* SECTIONS */
   .panel{margin-bottom:26px}
-  .panel-head{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:12px;margin-bottom:14px;flex-wrap:wrap;
-  }
+  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
   .panel-title{display:flex;align-items:center;gap:10px}
-  .panel-title .icon{
-    width:36px;height:36px;border-radius:10px;background:var(--grad-soft);
-    color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:15px;
-  }
+  .panel-title .icon{width:36px;height:36px;border-radius:10px;background:var(--grad-soft);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:15px}
   .panel-title h2{font-size:17px;font-weight:800;letter-spacing:-.3px}
-  .panel-title .count{
-    font-size:12px;font-weight:700;color:var(--primary);
-    background:rgba(79,70,229,.1);padding:2px 9px;border-radius:100px;margin-left:2px;
-  }
-  .btn-clear{
-    font-size:12.5px;font-weight:600;color:var(--danger);
-    display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;
-    background:#fff;border:1.5px solid #ffe1e1;transition:.15s;
-  }
+  .panel-title .count{font-size:12px;font-weight:700;color:var(--primary);background:rgba(79,70,229,.1);padding:2px 9px;border-radius:100px;margin-left:2px}
+  .btn-clear{font-size:12.5px;font-weight:600;color:var(--danger);display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:#fff;border:1.5px solid #ffe1e1;transition:.15s}
   .btn-clear:hover{background:#fff0f0;border-color:#fecaca}
-
   .cards{display:flex;flex-direction:column;gap:10px}
-  .empty-state{
-    text-align:center;padding:36px 20px;background:var(--card);
-    border:1.5px dashed var(--line-2);border-radius:var(--radius);color:var(--muted);
-  }
+  .empty-state{text-align:center;padding:36px 20px;background:var(--card);border:1.5px dashed var(--line-2);border-radius:var(--radius);color:var(--muted)}
   .empty-state i{font-size:34px;color:#c7cde0;margin-bottom:10px;display:block}
   .empty-state p{font-size:13.5px;font-weight:500}
-
-  .card{
-    background:var(--card-solid);border:1.5px solid var(--line);border-radius:14px;
-    padding:14px 16px;transition:border-color .15s,box-shadow .15s,transform .15s;
-    box-shadow:var(--shadow-sm);animation:slideUp .2s ease;
-  }
+  .card{background:var(--card-solid);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;transition:border-color .15s,box-shadow .15s,transform .15s;box-shadow:var(--shadow-sm);animation:slideUp .2s ease}
   .card:hover{border-color:#d6d3ff;box-shadow:var(--shadow)}
   .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
-  .card-text{
-    font-size:14px;font-weight:600;color:var(--txt);line-height:1.45;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-    word-break:break-word;
-  }
+  .card-text{font-size:14px;font-weight:600;color:var(--txt);line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word}
   .card-time{font-size:11px;color:var(--muted);font-weight:500;white-space:nowrap;flex-shrink:0;padding-top:2px}
   .card-meta{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-  .tag{
-    display:inline-flex;align-items:center;gap:5px;
-    font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;
-    background:#f2f3fa;color:var(--txt-2);
-  }
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;background:#f2f3fa;color:var(--txt-2)}
   .tag i{font-size:10px;color:var(--primary)}
   .card-actions{display:flex;gap:8px;flex-wrap:wrap}
-  .card-btn{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:12px;font-weight:700;padding:8px 13px;border-radius:9px;
-    transition:.15s;white-space:nowrap;
-  }
+  .card-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:8px 13px;border-radius:9px;transition:.15s;white-space:nowrap}
   .card-btn i{font-size:11px}
   .cb-play{background:var(--grad);color:#fff;box-shadow:0 6px 14px -6px rgba(79,70,229,.5)}
   .cb-play:hover{transform:translateY(-1px)}
@@ -281,41 +128,21 @@
   .cb-delete{background:#fff0f0;color:var(--danger);margin-left:auto}
   .cb-delete:hover{background:#ffe1e1}
 
-  /* ============ FOOTER ============ */
-  footer{
-    text-align:center;padding:26px 10px 6px;margin-top:auto;
-    font-size:13px;color:var(--muted);font-weight:500;
-  }
+  /* FOOTER & WHATSAPP */
+  footer{text-align:center;padding:26px 10px 6px;margin-top:auto;font-size:13px;color:var(--muted);font-weight:500}
   footer .heart{color:var(--danger);animation:beat 1.4s infinite}
   @keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
   footer a{color:var(--primary);font-weight:700;text-decoration:none}
   footer a:hover{text-decoration:underline}
-
-  /* ============ WHATSAPP FLOAT ============ */
-  .wa-float{
-    position:fixed;bottom:24px;right:24px;z-index:1000;
-    width:60px;height:60px;border-radius:50%;background:#25D366;
-    display:flex;align-items:center;justify-content:center;
-    box-shadow:0 12px 28px -8px rgba(37,211,102,.6);
-    transition:transform .2s,box-shadow .2s;
-  }
-  .wa-float::before{
-    content:"";position:absolute;inset:-4px;border-radius:50%;
-    border:2px solid rgba(37,211,102,.4);animation:waPulse 2s infinite;
-  }
+  .wa-float{position:fixed;bottom:24px;right:24px;z-index:1000;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 28px -8px rgba(37,211,102,.6);transition:transform .2s,box-shadow .2s}
+  .wa-float::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(37,211,102,.4);animation:waPulse 2s infinite}
   @keyframes waPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.35);opacity:0}}
   .wa-float:hover{transform:scale(1.08);box-shadow:0 16px 34px -8px rgba(37,211,102,.75)}
   .wa-float i{font-size:30px;color:#fff}
 
-  /* ============ TOASTS ============ */
+  /* TOASTS & SHIMMER */
   .toasts{position:fixed;top:20px;right:20px;z-index:2000;display:flex;flex-direction:column;gap:10px;max-width:min(360px,calc(100vw - 40px))}
-  .toast{
-    display:flex;align-items:center;gap:10px;
-    background:#fff;border-radius:12px;padding:13px 16px;
-    box-shadow:0 14px 36px -10px rgba(20,24,40,.25);
-    border-left:4px solid var(--primary);font-size:13.5px;font-weight:600;color:var(--txt);
-    animation:toastIn .25s ease;will-change:transform,opacity;
-  }
+  .toast{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:13px 16px;box-shadow:0 14px 36px -10px rgba(20,24,40,.25);border-left:4px solid var(--primary);font-size:13.5px;font-weight:600;color:var(--txt);animation:toastIn .25s ease;will-change:transform,opacity}
   @keyframes toastIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
   .toast.out{animation:toastOut .25s ease forwards}
   @keyframes toastOut{to{opacity:0;transform:translateX(40px)}}
@@ -324,15 +151,10 @@
   .toast.error{border-left-color:var(--danger)}.toast.error i{color:var(--danger)}
   .toast.warn{border-left-color:var(--warn)}.toast.warn i{color:var(--warn)}
   .toast.info{border-left-color:var(--primary)}.toast.info i{color:var(--primary)}
-
-  /* ============ SHIMMER (for optimistic player) ============ */
-  .shimmer{
-    background:linear-gradient(90deg,#eef0f7 25%,#e2e6f2 37%,#eef0f7 63%);
-    background-size:400% 100%;animation:shimmer 1.2s ease infinite;border-radius:8px;
-  }
+  .shimmer{background:linear-gradient(90deg,#eef0f7 25%,#e2e6f2 37%,#eef0f7 63%);background-size:400% 100%;animation:shimmer 1.2s ease infinite;border-radius:8px}
   @keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
 
-  /* ============ RESPONSIVE ============ */
+  /* RESPONSIVE */
   @media (max-width:640px){
     body{padding:16px 12px 120px}
     .studio{padding:18px}
@@ -347,20 +169,15 @@
     .cb-delete{margin-left:0}
     .toasts{top:12px;right:12px;left:12px;max-width:none}
   }
-  @media (max-width:400px){
-    .brand h1{font-size:18px}
-    .card-btn{font-size:11.5px;padding:7px 10px}
-  }
 </style>
 </head>
 <body>
 
 <div class="app">
-
-  <!-- ============ HEADER ============ -->
+  <!-- HEADER -->
   <header>
     <div class="brand">
-      <div class="logo"><i class="fas fa-waveform"></i><i class="fas fa-microphone" style="position:absolute;font-size:22px"></i></div>
+      <div class="logo"><i class="fas fa-microphone"></i></div>
       <div>
         <h1>Devtext to Speech</h1>
         <p>Type · Generate · Play · Save forever</p>
@@ -369,7 +186,7 @@
     <div class="pill"><span class="dot"></span> API Live</div>
   </header>
 
-  <!-- ============ STUDIO ============ -->
+  <!-- STUDIO -->
   <section class="studio">
     <div class="section-label"><i class="fas fa-pen-nib"></i> Your Text</div>
     <div class="textarea-wrap">
@@ -418,7 +235,7 @@
       </button>
     </div>
 
-    <!-- Result panel (appears after generation) -->
+    <!-- RESULT PLAYER -->
     <div class="result-panel" id="resultPanel">
       <div class="result-head">
         <div class="label"><i class="fas fa-music"></i> Now Playing</div>
@@ -435,7 +252,7 @@
     </div>
   </section>
 
-  <!-- ============ SAVED FOR LATER ============ -->
+  <!-- SAVED -->
   <section class="panel" id="savedPanel">
     <div class="panel-head">
       <div class="panel-title">
@@ -447,7 +264,7 @@
     <div class="cards" id="savedCards"></div>
   </section>
 
-  <!-- ============ HISTORY ============ -->
+  <!-- HISTORY -->
   <section class="panel" id="historyPanel">
     <div class="panel-head">
       <div class="panel-title">
@@ -462,230 +279,115 @@
     <div class="cards" id="historyCards"></div>
   </section>
 
-  <!-- ============ FOOTER ============ -->
+  <!-- FOOTER -->
   <footer>
     Made with <span class="heart">❤️</span> by <strong>Dev Gift</strong> · <a href="tel:09164624021">09164624021</a>
   </footer>
 </div>
 
-<!-- ============ WHATSAPP FLOAT ============ -->
+<!-- WHATSAPP -->
 <a class="wa-float" href="https://wa.me/2349164624021" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
   <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ============ TOASTS ============ -->
+<!-- TOASTS -->
 <div class="toasts" id="toasts"></div>
 
 <script>
 /* ============================================================
-   CONSTANTS
+   CONSTANTS & DOM
    ============================================================ */
-const API_BASE = 'https://api.omegatech.app/api/ai/text2speech-v3';
 const LS_HISTORY = 'devtext_history_v1';
 const LS_SAVED   = 'devtext_saved_v1';
 const LS_PREFS   = 'devtext_prefs_v1';
 const MAX_HISTORY = 30;
 const MAX_SAVED   = 50;
 
-/* ============================================================
-   DOM REFS
-   ============================================================ */
 const $ = (id) => document.getElementById(id);
-const textInput   = $('textInput');
-const clearBtn    = $('clearBtn');
-const charCount   = $('charCount');
-const voiceSelect = $('voiceSelect');
-const langSelect  = $('langSelect');
-const generateBtn = $('generateBtn');
-const saveBtn     = $('saveBtn');
+const textInput = $('textInput'), clearBtn = $('clearBtn'), charCount = $('charCount');
+const voiceSelect = $('voiceSelect'), langSelect = $('langSelect');
+const generateBtn = $('generateBtn'), saveBtn = $('saveBtn');
+const resultPanel = $('resultPanel'), playToggle = $('playToggle'), seekBar = $('seekBar');
+const curTime = $('curTime'), durTime = $('durTime'), dlBtn = $('dlBtn');
+const savedCards = $('savedCards'), savedCount = $('savedCount');
+const historyCards = $('historyCards'), historyCount = $('historyCount');
+const clearAllBtn = $('clearAllBtn'), toasts = $('toasts');
 
-const resultPanel = $('resultPanel');
-const playToggle  = $('playToggle');
-const seekBar     = $('seekBar');
-const curTime     = $('curTime');
-const durTime     = $('durTime');
-const dlBtn       = $('dlBtn');
-
-const savedCards   = $('savedCards');
-const savedCount   = $('savedCount');
-const historyCards = $('historyCards');
-const historyCount = $('historyCount');
-const clearAllBtn  = $('clearAllBtn');
-const toasts       = $('toasts');
-
-/* ============================================================
-   STATE
-   ============================================================ */
-let currentAudio = null;          // HTMLAudioElement
-let currentItem  = null;          // { text, voice, language, audio, timestamp }
-let history = [];
-let saved   = [];
+let currentAudio = null, currentItem = null, history = [], saved = [];
 
 /* ============================================================
    HELPERS
    ============================================================ */
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-
-function escapeHtml(str){
-  return String(str).replace(/[&<>"']/g, c => ({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
-}
-
+function escapeHtml(str){ return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function timeAgo(iso){
   const then = new Date(iso).getTime();
   if (isNaN(then)) return '';
   const diff = Math.floor((Date.now() - then) / 1000);
-  if (diff < 10)   return 'just now';
-  if (diff < 60)   return diff + 's ago';
+  if (diff < 10) return 'just now';
+  if (diff < 60) return diff + 's ago';
   if (diff < 3600) return Math.floor(diff/60) + 'm ago';
-  if (diff < 86400)return Math.floor(diff/3600) + 'h ago';
+  if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
   return Math.floor(diff/86400) + 'd ago';
 }
-
 function fmtTime(sec){
   if (!isFinite(sec) || sec < 0) sec = 0;
-  const m = Math.floor(sec / 60);
-  const s = Math.floor(sec % 60);
-  return m + ':' + String(s).padStart(2,'0');
+  return Math.floor(sec/60) + ':' + String(Math.floor(sec%60)).padStart(2,'0');
 }
-
 function showToast(msg, type = 'info'){
   const icons = { success:'fa-circle-check', error:'fa-circle-exclamation', warn:'fa-triangle-exclamation', info:'fa-circle-info' };
   const el = document.createElement('div');
   el.className = 'toast ' + type;
   el.innerHTML = `<i class="fas ${icons[type] || icons.info}"></i><span>${escapeHtml(msg)}</span>`;
   toasts.appendChild(el);
-  setTimeout(() => {
-    el.classList.add('out');
-    setTimeout(() => el.remove(), 280);
-  }, 3000);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 280); }, 3000);
 }
 
 /* ============================================================
-   LOCALSTORAGE
+   STORAGE
    ============================================================ */
-function loadHistory(){
-  try { history = JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); }
-  catch { history = []; }
-  if (!Array.isArray(history)) history = [];
-}
-function persistHistory(){
-  try { localStorage.setItem(LS_HISTORY, JSON.stringify(history)); }
-  catch { showToast('Storage full — old items trimmed', 'warn'); }
-  if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
-}
-
-function loadSaved(){
-  try { saved = JSON.parse(localStorage.getItem(LS_SAVED) || '[]'); }
-  catch { saved = []; }
-  if (!Array.isArray(saved)) saved = [];
-}
-function persistSaved(){
-  try { localStorage.setItem(LS_SAVED, JSON.stringify(saved)); }
-  catch { showToast('Storage full', 'warn'); }
-  if (saved.length > MAX_SAVED) saved = saved.slice(0, MAX_SAVED);
-}
-
-function savePrefs(){
-  try {
-    localStorage.setItem(LS_PREFS, JSON.stringify({
-      voice: voiceSelect.value,
-      language: langSelect.value
-    }));
-  } catch {}
-}
-function loadPrefs(){
-  try {
-    const p = JSON.parse(localStorage.getItem(LS_PREFS) || '{}');
-    if (p.voice) voiceSelect.value = p.voice;
-    if (p.language) langSelect.value = p.language;
-  } catch {}
-}
+function loadHistory(){ try { history = JSON.parse(localStorage.getItem(LS_HISTORY) || '[]'); } catch { history = []; } if (!Array.isArray(history)) history = []; }
+function persistHistory(){ try { localStorage.setItem(LS_HISTORY, JSON.stringify(history)); } catch {} if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY); }
+function loadSaved(){ try { saved = JSON.parse(localStorage.getItem(LS_SAVED) || '[]'); } catch { saved = []; } if (!Array.isArray(saved)) saved = []; }
+function persistSaved(){ try { localStorage.setItem(LS_SAVED, JSON.stringify(saved)); } catch {} if (saved.length > MAX_SAVED) saved = saved.slice(0, MAX_SAVED); }
+function savePrefs(){ try { localStorage.setItem(LS_PREFS, JSON.stringify({ voice: voiceSelect.value, language: langSelect.value })); } catch {} }
+function loadPrefs(){ try { const p = JSON.parse(localStorage.getItem(LS_PREFS) || '{}'); if (p.voice) voiceSelect.value = p.voice; if (p.language) langSelect.value = p.language; } catch {} }
 
 /* ============================================================
-   RENDER — HISTORY
+   RENDER
    ============================================================ */
 function renderHistory(){
   historyCount.textContent = history.length;
   clearAllBtn.style.display = history.length ? 'flex' : 'none';
-
-  if (!history.length){
-    historyCards.innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-headphones-simple"></i>
-        <p>No history yet — generate your first audio!</p>
-      </div>`;
-    return;
-  }
-
+  if (!history.length){ historyCards.innerHTML = `<div class="empty-state"><i class="fas fa-headphones-simple"></i><p>No history yet — generate your first audio!</p></div>`; return; }
   historyCards.innerHTML = history.map(item => `
     <div class="card" data-id="${item.id}">
-      <div class="card-top">
-        <div class="card-text">${escapeHtml(item.text)}</div>
-        <div class="card-time">${timeAgo(item.timestamp)}</div>
-      </div>
-      <div class="card-meta">
-        <span class="tag"><i class="fas fa-user-astronaut"></i>${escapeHtml(item.voice)}</span>
-        <span class="tag"><i class="fas fa-globe"></i>${escapeHtml(item.language)}</span>
-      </div>
+      <div class="card-top"><div class="card-text">${escapeHtml(item.text)}</div><div class="card-time">${timeAgo(item.timestamp)}</div></div>
+      <div class="card-meta"><span class="tag"><i class="fas fa-user-astronaut"></i>${escapeHtml(item.voice)}</span><span class="tag"><i class="fas fa-globe"></i>${escapeHtml(item.language)}</span></div>
       <div class="card-actions">
-        <button class="card-btn cb-play" data-act="play" data-id="${item.id}">
-          <i class="fas fa-play"></i> Play
-        </button>
-        <button class="card-btn cb-download" data-act="download" data-id="${item.id}">
-          <i class="fas fa-download"></i> Download
-        </button>
-        <button class="card-btn cb-delete" data-act="delete" data-id="${item.id}">
-          <i class="fas fa-trash-can"></i> Delete
-        </button>
+        <button class="card-btn cb-play" data-act="play" data-id="${item.id}"><i class="fas fa-play"></i> Play</button>
+        <button class="card-btn cb-download" data-act="download" data-id="${item.id}"><i class="fas fa-download"></i> Download</button>
+        <button class="card-btn cb-delete" data-act="delete" data-id="${item.id}"><i class="fas fa-trash-can"></i> Delete</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
-
-/* ============================================================
-   RENDER — SAVED
-   ============================================================ */
 function renderSaved(){
   savedCount.textContent = saved.length;
-
-  if (!saved.length){
-    savedCards.innerHTML = `
-      <div class="empty-state">
-        <i class="fas fa-bookmark"></i>
-        <p>Nothing saved yet — save text for later!</p>
-      </div>`;
-    return;
-  }
-
+  if (!saved.length){ savedCards.innerHTML = `<div class="empty-state"><i class="fas fa-bookmark"></i><p>Nothing saved yet — save text for later!</p></div>`; return; }
   savedCards.innerHTML = saved.map(item => `
     <div class="card" data-id="${item.id}">
-      <div class="card-top">
-        <div class="card-text">${escapeHtml(item.text)}</div>
-        <div class="card-time">${timeAgo(item.timestamp)}</div>
-      </div>
-      <div class="card-meta">
-        <span class="tag"><i class="fas fa-user-astronaut"></i>${escapeHtml(item.voice)}</span>
-        <span class="tag"><i class="fas fa-globe"></i>${escapeHtml(item.language)}</span>
-      </div>
+      <div class="card-top"><div class="card-text">${escapeHtml(item.text)}</div><div class="card-time">${timeAgo(item.timestamp)}</div></div>
+      <div class="card-meta"><span class="tag"><i class="fas fa-user-astronaut"></i>${escapeHtml(item.voice)}</span><span class="tag"><i class="fas fa-globe"></i>${escapeHtml(item.language)}</span></div>
       <div class="card-actions">
-        <button class="card-btn cb-play" data-sact="generate" data-id="${item.id}">
-          <i class="fas fa-bolt"></i> Generate now
-        </button>
-        <button class="card-btn cb-load" data-sact="load" data-id="${item.id}">
-          <i class="fas fa-pen"></i> Load
-        </button>
-        <button class="card-btn cb-delete" data-sact="delete" data-id="${item.id}">
-          <i class="fas fa-trash-can"></i> Delete
-        </button>
+        <button class="card-btn cb-play" data-sact="generate" data-id="${item.id}"><i class="fas fa-bolt"></i> Generate now</button>
+        <button class="card-btn cb-load" data-sact="load" data-id="${item.id}"><i class="fas fa-pen"></i> Load</button>
+        <button class="card-btn cb-delete" data-sact="delete" data-id="${item.id}"><i class="fas fa-trash-can"></i> Delete</button>
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 /* ============================================================
-   TEXTAREA
+   INPUT & PLAYER
    ============================================================ */
 function updateCharCount(){
   const len = textInput.value.length;
@@ -694,67 +396,27 @@ function updateCharCount(){
   clearBtn.classList.toggle('show', len > 0);
 }
 textInput.addEventListener('input', updateCharCount);
-clearBtn.addEventListener('click', () => {
-  textInput.value = '';
-  updateCharCount();
-  textInput.focus();
-});
+clearBtn.addEventListener('click', () => { textInput.value = ''; updateCharCount(); textInput.focus(); });
 
-/* ============================================================
-   AUDIO PLAYER
-   ============================================================ */
 function setupAudio(url){
-  if (currentAudio){
-    currentAudio.pause();
-    currentAudio.src = '';
-  }
+  if (currentAudio){ currentAudio.pause(); currentAudio.src = ''; }
   currentAudio = new Audio(url);
   currentAudio.preload = 'auto';
-
-  currentAudio.addEventListener('loadedmetadata', () => {
-    durTime.textContent = fmtTime(currentAudio.duration);
-  });
+  currentAudio.addEventListener('loadedmetadata', () => { durTime.textContent = fmtTime(currentAudio.duration); });
   currentAudio.addEventListener('timeupdate', () => {
-    if (currentAudio.duration){
-      const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
-      seekBar.value = pct;
-      curTime.textContent = fmtTime(currentAudio.currentTime);
-    }
+    if (currentAudio.duration){ seekBar.value = (currentAudio.currentTime / currentAudio.duration) * 100; curTime.textContent = fmtTime(currentAudio.currentTime); }
   });
-  currentAudio.addEventListener('ended', () => {
-    playToggle.classList.remove('playing');
-    playToggle.innerHTML = '<i class="fas fa-play"></i>';
-    seekBar.value = 0;
-    curTime.textContent = '0:00';
-  });
-  currentAudio.addEventListener('play', () => {
-    playToggle.classList.add('playing');
-    playToggle.innerHTML = '<i class="fas fa-pause"></i>';
-  });
-  currentAudio.addEventListener('pause', () => {
-    playToggle.classList.remove('playing');
-    playToggle.innerHTML = '<i class="fas fa-play"></i>';
-  });
+  currentAudio.addEventListener('ended', () => { playToggle.classList.remove('playing'); playToggle.innerHTML = '<i class="fas fa-play"></i>'; seekBar.value = 0; curTime.textContent = '0:00'; });
+  currentAudio.addEventListener('play', () => { playToggle.classList.add('playing'); playToggle.innerHTML = '<i class="fas fa-pause"></i>'; });
+  currentAudio.addEventListener('pause', () => { playToggle.classList.remove('playing'); playToggle.innerHTML = '<i class="fas fa-play"></i>'; });
 }
-
 playToggle.addEventListener('click', () => {
   if (!currentAudio) return;
-  if (currentAudio.paused){
-    currentAudio.play().catch(() => showToast('Tap play again to start', 'warn'));
-  } else {
-    currentAudio.pause();
-  }
+  if (currentAudio.paused) currentAudio.play().catch(() => showToast('Tap play again', 'warn'));
+  else currentAudio.pause();
 });
-
-seekBar.addEventListener('input', () => {
-  if (!currentAudio || !currentAudio.duration) return;
-  currentAudio.currentTime = (seekBar.value / 100) * currentAudio.duration;
-});
-
-dlBtn.addEventListener('click', () => {
-  if (!currentItem) return;
-  downloadAudio(currentItem.audio, `devtext-${currentItem.id}.mp3`);
-});
+seekBar.addEventListener('input', () => { if (currentAudio && currentAudio.duration) currentAudio.currentTime = (seekBar.value / 100) * currentAudio.duration; });
+dlBtn.addEventListener('click', () => { if (currentItem) downloadAudio(currentItem.audio, `devtext-${currentItem.id}.mp3`); });
 
 /* ============================================================
    DOWNLOAD
@@ -765,49 +427,34 @@ async function downloadAudio(url, filename){
     if (!res.ok) throw new Error('fetch failed');
     const blob = await res.blob();
     const objUrl = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = objUrl;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+    const a = document.createElement('a'); a.href = objUrl; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(objUrl);
     showToast('⬇ Download started', 'success');
-  } catch {
-    window.open(url, '_blank');
-    showToast('Opened audio — long-press to save', 'info');
-  }
+  } catch { window.open(url, '_blank'); showToast('Opened audio — long-press to save', 'info'); }
 }
 
 /* ============================================================
-   GENERATE — FAST FLOW
+   GENERATE (NOW CALLS OUR OWN BACKEND)
    ============================================================ */
 async function generateSpeech(opts = {}){
   const text = (opts.text !== undefined ? opts.text : textInput.value).trim();
   const voice = opts.voice || voiceSelect.value;
   const language = opts.language || langSelect.value;
 
-  if (!text){
-    showToast('Type something first ✍️', 'warn');
-    textInput.focus();
-    return;
-  }
+  if (!text){ showToast('Type something first ✍️', 'warn'); textInput.focus(); return; }
 
-  // ---- Instant feedback (0ms) ----
   generateBtn.classList.add('busy');
   generateBtn.innerHTML = '<i class="fas fa-bolt"></i> Generating…';
   showToast('⚡ Generating…', 'info');
 
-  // Optimistic shimmer in result panel
   resultPanel.classList.add('show');
-  playToggle.classList.add('shimmer');
-  playToggle.innerHTML = '';
-  seekBar.classList.add('shimmer');
-  seekBar.value = 0;
-  curTime.textContent = '0:00';
-  durTime.textContent = '0:00';
+  playToggle.classList.add('shimmer'); playToggle.innerHTML = '';
+  seekBar.classList.add('shimmer'); seekBar.value = 0;
+  curTime.textContent = '0:00'; durTime.textContent = '0:00';
 
-  const url = `${API_BASE}?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}&language=${encodeURIComponent(language)}`;
+  // 🔥 CALLING OUR RENDER BACKEND ROUTE INSTEAD OF THE API DIRECTLY
+  const url = `/api/generate?text=${encodeURIComponent(text)}&voice=${encodeURIComponent(voice)}&language=${encodeURIComponent(language)}`;
 
   let data;
   try {
@@ -816,56 +463,29 @@ async function generateSpeech(opts = {}){
     data = await res.json();
     if (!data || data.success !== true) throw new Error((data && data.message) || 'Generation failed');
     if (!data.audio) throw new Error('No audio URL returned');
-  } catch (err){
-    // reset UI
+  } catch (err) {
     resultPanel.classList.remove('show');
-    playToggle.classList.remove('shimmer');
-    seekBar.classList.remove('shimmer');
+    playToggle.classList.remove('shimmer'); seekBar.classList.remove('shimmer');
     generateBtn.classList.remove('busy');
-    generateBtn.innerHTML = '<i class="fas fa-bolt"></i> Generate Speech';
+    generateBtn.innerHTML = '<acti class="fas fa ===-bolt"></i> Generate Speech';
     showToast('❌ ' + (err.message || 'Generation failed'), 'error');
     return;
   }
 
-  // ---- Success ----
-  playToggle.classList.remove('shimmer');
-  seekBar.classList.remove('shimmer');
-
-  const item = {
-    id: uid(),
-    text: data.text || text,
-    voice: data.voice || voice,
-    language: data.language || language,
-    audio: data.audio,
-    timestamp: data.timestamp || new Date().toISOString()
-  };
+  playToggle.classList.remove('shimmer'); seekBar.classList.remove('shimmer');
+  const item = { id: uid(), text: data.text || text, voice: data.voice || voice, language: data.language || language, audio: data.audio, timestamp: data.timestamp || new Date().toISOString() };
   currentItem = item;
-
-  // Setup player
   setupAudio(item.audio);
 
-  // Try instant play (user gesture allows it in most browsers)
-  try {
-    await currentAudio.play();
-    showToast('🎵 Playing · Saved to history', 'success');
-  } catch {
-    // autoplay blocked → open tab fallback
-    window.open(item.audio, '_blank');
-    showToast('🎵 Opened audio in new tab · Saved', 'success');
-  }
+  try { await currentAudio.play(); showToast('🎵 Playing · Saved to history', 'success'); }
+  catch { window.open(item.audio, '_blank'); showToast('🎵 Opened audio in new tab · Saved', 'success'); }
 
-  // Save to history
   history.unshift(item);
   if (history.length > MAX_HISTORY) history = history.slice(0, MAX_HISTORY);
-  persistHistory();
-  renderHistory();
+  persistHistory(); renderHistory();
 
-  // Save prefs
-  voiceSelect.value = item.voice;
-  langSelect.value = item.language;
-  savePrefs();
+  voiceSelect.value = item.voice; langSelect.value = item.language; savePrefs();
 
-  // Reset button
   generateBtn.classList.remove('busy');
   generateBtn.innerHTML = '<i class="fas fa-bolt"></i> Generate Speech';
 }
@@ -877,109 +497,54 @@ generateBtn.addEventListener('click', () => generateSpeech());
    ============================================================ */
 saveBtn.addEventListener('click', () => {
   const text = textInput.value.trim();
-  if (!text){
-    showToast('Type something to save ✍️', 'warn');
-    textInput.focus();
-    return;
-  }
-  const item = {
-    id: uid(),
-    text,
-    voice: voiceSelect.value,
-    language: langSelect.value,
-    timestamp: new Date().toISOString()
-  };
-  saved.unshift(item);
+  if (!text){ showToast('Type something to save ✍️', 'warn'); textInput.focus(); return; }
+  saved.unshift({ id: uid(), text, voice: voiceSelect.value, language: langSelect.value, timestamp: new Date().toISOString() });
   if (saved.length > MAX_SAVED) saved = saved.slice(0, MAX_SAVED);
-  persistSaved();
-  renderSaved();
-  showToast('💾 Saved for later', 'success');
+  persistSaved(); renderSaved(); showToast('💾 Saved for later', 'success');
 });
 
 /* ============================================================
-   HISTORY CARD ACTIONS (event delegation)
+   CARD ACTIONS
    ============================================================ */
 historyCards.addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-act]');
-  if (!btn) return;
-  const id = btn.dataset.id;
-  const act = btn.dataset.act;
-  const item = history.find(x => x.id === id);
-  if (!item) return;
+  const btn = e.target.closest('button[data-act]'); if (!btn) return;
+  const id = btn.dataset.id, act = btn.dataset.act;
+  const item = history.find(x => x.id === id); if (!item) return;
 
-  if (act === 'play'){
-    // Play in-page
-    if (currentItem && currentItem.audio === item.audio && currentAudio){
-      currentAudio.currentTime = 0;
-      currentAudio.play().catch(() => window.open(item.audio, '_blank'));
-    } else {
-      currentItem = item;
-      resultPanel.classList.add('show');
-      setupAudio(item.audio);
-      currentAudio.play().catch(() => window.open(item.audio, '_blank'));
-    }
-    // Scroll to player
+  if ( 'play'){
+    if (currentItem && currentItem.audio === item.audio && currentAudio){ currentAudio.currentTime = 0; currentAudio.play().catch(() => window.open(item.audio, '_blank')); }
+    else { currentItem = item; resultPanel.classList.add('show'); setupAudio(item.audio); currentAudio.play().catch(() => window.open(item.audio, '_blank')); }
     resultPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-
-  if (act === 'download'){
-    downloadAudio(item.audio, `devtext-${item.id}.mp3`);
-  }
-
+  if (act === 'download') downloadAudio(item.audio, `devtext-${item.id}.mp3`);
   if (act === 'delete'){
     if (!confirm('Delete this item from history?')) return;
-    history = history.filter(x => x.id !== id);
-    persistHistory();
-    renderHistory();
-    showToast('🗑 Deleted', 'info');
+    history = history.filter(x => x.id !== id); persistHistory(); renderHistory(); showToast('🗑 Deleted', 'info');
   }
 });
 
 clearAllBtn.addEventListener('click', () => {
   if (!history.length) return;
   if (!confirm('Delete ALL history? This cannot be undone.')) return;
-  history = [];
-  persistHistory();
-  renderHistory();
-  showToast('History cleared', 'info');
+  history = []; persistHistory(); renderHistory(); showToast('History cleared', 'info');
 });
 
-/* ============================================================
-   SAVED CARD ACTIONS (event delegation)
-   ============================================================ */
 savedCards.addEventListener('click', (e) => {
-  const btn = e.target.closest('button[data-sact]');
-  if (!btn) return;
-  const id = btn.dataset.id;
-  const act = btn.dataset.sact;
-  const item = saved.find(x => x.id === id);
-  if (!item) return;
+  const btn = e.target.closest('button[data-sact]'); if (!btn) return;
+  const id = btn.dataset.id, act = btn.dataset.sact;
+  const item = saved.find(x => x.id === id); if (!item) return;
 
   if (act === 'generate'){
-    // Fill fields + generate
-    textInput.value = item.text;
-    voiceSelect.value = item.voice;
-    langSelect.value = item.language;
-    updateCharCount();
+    textInput.value = item.text; voiceSelect.value = item.voice; langSelect.value = item.language; updateCharCount();
     generateSpeech({ text: item.text, voice: item.voice, language: item.language });
   }
-
   if (act === 'load'){
-    textInput.value = item.text;
-    voiceSelect.value = item.voice;
-    langSelect.value = item.language;
-    updateCharCount();
-    textInput.focus();
-    textInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    showToast('Loaded into editor', 'info');
+    textInput.value = item.text; voiceSelect.value = item.voice; langSelect.value = item.language; updateCharCount();
+    textInput.focus(); textInput.scrollIntoView({ behavior: 'smooth', block: 'center' }); showToast('Loaded into editor', 'info');
   }
-
   if (act === 'delete'){
     if (!confirm('Delete this saved item?')) return;
-    saved = saved.filter(x => x.id !== id);
-    persistSaved();
-    renderSaved();
-    showToast('🗑 Deleted', 'info');
+    saved = saved.filter(x => x.id !== id); persistSaved(); renderSaved(); showToast('🗑 Deleted', 'info');
   }
 });
 
@@ -987,26 +552,11 @@ savedCards.addEventListener('click', (e) => {
    INIT
    ============================================================ */
 function init(){
-  loadPrefs();
-  loadHistory();
-  loadSaved();
-  renderHistory();
-  renderSaved();
-  updateCharCount();
-
-  // Save prefs on change
+  loadPrefs(); loadHistory(); loadSaved(); renderHistory(); renderSaved(); updateCharCount();
   voiceSelect.addEventListener('change', savePrefs);
   langSelect.addEventListener('change', savePrefs);
-
-  // Keyboard shortcut: Ctrl/Cmd + Enter to generate
-  textInput.addEventListener('keydown', (e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
-      e.preventDefault();
-      generateSpeech();
-    }
-  });
+  textInput.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter'){ e.preventDefault(); generateSpeech(); } });
 }
-
 init();
 </script>
 </body>
